@@ -31,6 +31,12 @@ var API_KEYS = {
 module.exports = API_KEYS;
 ```
 
+Create Twilio Phone Number
+
+On your account in Twilio, Choose the "Account" menu option off of your account in top right menu.
+Should Create Your First Twilio Number button to create a number.  
+This will give you a number that will need to be used as the from phone number in the app, currently at server/workers/twilio-api-call.js   There are two types, a real number and a test, the test number only logs to the console.
+
 ## Tech Stack
 
 The client side is written entirely in React Native for iOS. The server is written in Node Express and uses the Sqlite database engine, along with the Bookshelf.js ORM and Knex SQL query builder.
