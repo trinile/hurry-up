@@ -11,60 +11,60 @@ import React, {
   TouchableHighlight,
 } from 'react-native';
 
-const PickerItemIOS     = PickerIOS.Item;
+const PickerItem2IOS     = PickerIOS.Item;
 const deviceWidth       = Dimensions.get('window').width;
 const deviceHeight      = Dimensions.get('window').height;
 const stateNames = [
-  {value: 'AK', state: 'Alaska'},
-  {value: 'AL', state: 'Alabama'},
-  {value: 'AR', state: 'Arkansas'},
-  {value: 'AZ', state: 'Arizona'},
-  {value: 'CA', state: 'California'},
-  {value: 'CO', state: 'Colorado'},
-  {value: 'CT', state: 'Connecticut'},
-  {value: 'DE', state: 'Delaware'},
-  {value: 'FL', state: 'Florida'},
-  {value: 'GA', state: 'Georgia'},
-  {value: 'HI', state: 'Hawaii'},
-  {value: 'IA', state: 'Iowa'},
-  {value: 'ID', state: 'Idaho'},
-  {value: 'IL', state: 'Illinois'},
-  {value: 'IN', state: 'Indiana'},
-  {value: 'KS', state: 'Kansas'},
-  {value: 'KY', state: 'Kentucky'},
-  {value: 'LA', state: 'Louisiana'},
-  {value: 'MA', state: 'Massachusetts'},
-  {value: 'MD', state: 'Maryland'},
-  {value: 'ME', state: 'Maine'},
-  {value: 'MI', state: 'Michigan'},
-  {value: 'MN', state: 'Minnesota'},
-  {value: 'MO', state: 'Missouri'},
-  {value: 'MS', state: 'Mississippi'},
-  {value: 'MT', state: 'Montana'},
-  {value: 'NC', state: 'North Carolina'},
-  {value: 'ND', state: 'North Dakota'},
-  {value: 'NE', state: 'Nebraska'},
-  {value: 'NH', state: 'New Hampshire'},
-  {value: 'NJ', state: 'New Jersey'},
-  {value: 'NM', state: 'New Mexico'},
-  {value: 'NV', state: 'Nevada'},
-  {value: 'NY', state: 'New York'},
-  {value: 'OH', state: 'Ohio'},
-  {value: 'OK', state: 'Oklahoma'},
-  {value: 'OR', state: 'Oregon'},
-  {value: 'PA', state: 'Pennsylvania'},
-  {value: 'RI', state: 'Rhode Island'},
-  {value: 'SC', state: 'South Carolina'},
-  {value: 'SD', state: 'South Dakota'},
-  {value: 'TN', state: 'Tennessee'},
-  {value: 'TX', state: 'Texas'},
-  {value: 'UT', state: 'Utah'},
-  {value: 'VA', state: 'Virginia'},
-  {value: 'VT', state: 'Vermont'},
-  {value: 'WA', state: 'Washington'},
-  {value: 'WI', state: 'Wisconsin'},
-  {value: 'WV', state: 'West Virginia'},
-  {value: 'WY', state: 'Wyoming'}
+  {value: 'AK', stateName: 'Alaska'},
+  {value: 'AL', stateName: 'Alabama'},
+  {value: 'AR', stateName: 'Arkansas'},
+  {value: 'AZ', stateName: 'Arizona'},
+  {value: 'CA', stateName: 'California'},
+  {value: 'CO', stateName: 'Colorado'},
+  {value: 'CT', stateName: 'Connecticut'},
+  {value: 'DE', stateName: 'Delaware'},
+  {value: 'FL', stateName: 'Florida'},
+  {value: 'GA', stateName: 'Georgia'},
+  {value: 'HI', stateName: 'Hawaii'},
+  {value: 'IA', stateName: 'Iowa'},
+  {value: 'ID', stateName: 'Idaho'},
+  {value: 'IL', stateName: 'Illinois'},
+  {value: 'IN', stateName: 'Indiana'},
+  {value: 'KS', stateName: 'Kansas'},
+  {value: 'KY', stateName: 'Kentucky'},
+  {value: 'LA', stateName: 'Louisiana'},
+  {value: 'MA', stateName: 'Massachusetts'},
+  {value: 'MD', stateName: 'Maryland'},
+  {value: 'ME', stateName: 'Maine'},
+  {value: 'MI', stateName: 'Michigan'},
+  {value: 'MN', stateName: 'Minnesota'},
+  {value: 'MO', stateName: 'Missouri'},
+  {value: 'MS', stateName: 'Mississippi'},
+  {value: 'MT', stateName: 'Montana'},
+  {value: 'NC', stateName: 'North Carolina'},
+  {value: 'ND', stateName: 'North Dakota'},
+  {value: 'NE', stateName: 'Nebraska'},
+  {value: 'NH', stateName: 'New Hampshire'},
+  {value: 'NJ', stateName: 'New Jersey'},
+  {value: 'NM', stateName: 'New Mexico'},
+  {value: 'NV', stateName: 'Nevada'},
+  {value: 'NY', stateName: 'New York'},
+  {value: 'OH', stateName: 'Ohio'},
+  {value: 'OK', stateName: 'Oklahoma'},
+  {value: 'OR', stateName: 'Oregon'},
+  {value: 'PA', stateName: 'Pennsylvania'},
+  {value: 'RI', stateName: 'Rhode Island'},
+  {value: 'SC', stateName: 'South Carolina'},
+  {value: 'SD', stateName: 'South Dakota'},
+  {value: 'TN', stateName: 'Tennessee'},
+  {value: 'TX', stateName: 'Texas'},
+  {value: 'UT', stateName: 'Utah'},
+  {value: 'VA', stateName: 'Virginia'},
+  {value: 'VT', stateName: 'Vermont'},
+  {value: 'WA', stateName: 'Washington'},
+  {value: 'WI', stateName: 'Wisconsin'},
+  {value: 'WV', stateName: 'West Virginia'},
+  {value: 'WY', stateName: 'Wyoming'}
 ];
 
 class StatePicker extends Component {
@@ -104,13 +104,13 @@ class StatePicker extends Component {
     return (
       <Animated.View style={[{ transform: [{translateY: this.props.offSet}] }, styles.pickerPosition]}>
         <PickerIOS
-          selectedValue={this.props.earlyArrivalIndex}
-          onValueChange={(index) => this.props.changeEarlyArrival(index)}>
-          {Object.keys(earlyArrivalTimes).map((time) => (
-            <PickerItemIOS
-              key={time}
-              value={time}
-              label={earlyArrivalTimes[time].time}/>
+          selectedValue={this.props.stateNameIndex}
+          onValueChange={(index) => this.props.changeStateAbbreviation(index)}>
+          {Object.keys(stateNames).map((value) => (
+            <PickerItem2IOS
+              key={value}
+              value={value}
+              label={stateNames[value].stateName}/>
           ))}
         </PickerIOS>
       </Animated.View>
