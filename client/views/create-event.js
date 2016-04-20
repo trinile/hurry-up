@@ -1,3 +1,5 @@
+//gets current position of phone/user with navigator.geolocation.getCurrentPosition()
+
 import React, {
   Text,
   View,
@@ -90,7 +92,7 @@ class CreateEvent extends Component {
     //mode: 'Driving',        //Commented out until refresh unhighlights previous selected segment
     });
   }
-
+  //event for button clicked when all fields are filled
   buttonClicked() {
     if (this.state.eventName && this.state.date && this.state.address && this.state.city && this.state.state && this.state.mode) {
       var newEvent  = {
@@ -103,6 +105,7 @@ class CreateEvent extends Component {
         earlyArrival: earlyArrivalTimes[this.state.earlyArrivalIndex].value,
         userId: this.state.userId,
       };
+      //call sendEvent
       sendEvent(newEvent);
       this.clearForm();
 
@@ -110,6 +113,12 @@ class CreateEvent extends Component {
       var that = this;
       updateLocation(origin, that);
 
+      // The Geolocation.watchPosition() method is used to register a 
+      // handler function that will be called automatically each time the position of 
+      // the device changes. You can also, optionally, specify an error handling 
+      // callback function.
+      //This method returns a watch ID value then can be used to unregister 
+      //the handler by passing it to the Geolocation.clearWatch() method.
       this.watchID = navigator.geolocation.watchPosition((position) => {
         var lastPosition = position;
         this.setState({ lastPosition });
