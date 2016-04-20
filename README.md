@@ -20,6 +20,12 @@ The goal of hurry-up is to make sure you are never late to an appointment again.
 ..* Visual elements will not display correctly on older models.
 ..* Note: Xcode 7.3 required for IOS 9.3.1 and above to test on iphone directly.
 
+#####Non-platform specific commands:
+
+1. In emulator, ctrl-cmd-Z brings up a popup that allows you to Enable Live Reload.  This will let you edit your code and immediately see the result in the emulator.
+2. In emulator, cmd-D it will open a debugger window.
+
+
 ## API's
 
 This project will require developer accounts for two API's: Google Maps for location information, and Twilio to send text messages to users. It should be noted that each trial Twilio account allows texting to a single phone number. Each team member might need to create a separate account for testing purposes.
