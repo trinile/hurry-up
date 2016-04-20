@@ -26,10 +26,12 @@ Once you have created the necessary developer accounts, you will need to create 
 var API_KEYS = {
  googleAPI: /* INSERT HERE */,
  twilioAccountSid: /* INSERT HERE */,
- twilioAuthToken: /* INSERT HERE */
+ twilioAuthToken: /* INSERT HERE */,
+ twilioPhoneNumber: /* INSERT HERE */
 };
 module.exports = API_KEYS;
 ```
+Make sure the Twilio phone number is ten digits, with a leading + sign and no dashes - for example: '+14151234567'
 
 Create Twilio Phone Number
 
