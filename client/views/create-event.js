@@ -22,6 +22,7 @@ console.ignoredYellowBox = [
 
 import Picker from './picker';
 import DatePicker from './datePicker';
+import StatePicker from './statePicker';
 import {sendEvent, updateLocation} from '../helpers/request-helpers';
 
 const DISTANCE_TO_REFRESH = 0.004;
@@ -35,6 +36,59 @@ const earlyArrivalTimes   = [
   {time: '30 minutes', value: '1800'},
   {time: '45 minutes', value: '2700'},
   {time: '1 hour', value: '3600'}
+];
+
+const stateNames = [
+  {value: 'AK', stateName: 'Alaska'},
+  {value: 'AL', stateName: 'Alabama'},
+  {value: 'AR', stateName: 'Arkansas'},
+  {value: 'AZ', stateName: 'Arizona'},
+  {value: 'CA', stateName: 'California'},
+  {value: 'CO', stateName: 'Colorado'},
+  {value: 'CT', stateName: 'Connecticut'},
+  {value: 'DE', stateName: 'Delaware'},
+  {value: 'FL', stateName: 'Florida'},
+  {value: 'GA', stateName: 'Georgia'},
+  {value: 'HI', stateName: 'Hawaii'},
+  {value: 'IA', stateName: 'Iowa'},
+  {value: 'ID', stateName: 'Idaho'},
+  {value: 'IL', stateName: 'Illinois'},
+  {value: 'IN', stateName: 'Indiana'},
+  {value: 'KS', stateName: 'Kansas'},
+  {value: 'KY', stateName: 'Kentucky'},
+  {value: 'LA', stateName: 'Louisiana'},
+  {value: 'MA', stateName: 'Massachusetts'},
+  {value: 'MD', stateName: 'Maryland'},
+  {value: 'ME', stateName: 'Maine'},
+  {value: 'MI', stateName: 'Michigan'},
+  {value: 'MN', stateName: 'Minnesota'},
+  {value: 'MO', stateName: 'Missouri'},
+  {value: 'MS', stateName: 'Mississippi'},
+  {value: 'MT', stateName: 'Montana'},
+  {value: 'NC', stateName: 'North Carolina'},
+  {value: 'ND', stateName: 'North Dakota'},
+  {value: 'NE', stateName: 'Nebraska'},
+  {value: 'NH', stateName: 'New Hampshire'},
+  {value: 'NJ', stateName: 'New Jersey'},
+  {value: 'NM', stateName: 'New Mexico'},
+  {value: 'NV', stateName: 'Nevada'},
+  {value: 'NY', stateName: 'New York'},
+  {value: 'OH', stateName: 'Ohio'},
+  {value: 'OK', stateName: 'Oklahoma'},
+  {value: 'OR', stateName: 'Oregon'},
+  {value: 'PA', stateName: 'Pennsylvania'},
+  {value: 'RI', stateName: 'Rhode Island'},
+  {value: 'SC', stateName: 'South Carolina'},
+  {value: 'SD', stateName: 'South Dakota'},
+  {value: 'TN', stateName: 'Tennessee'},
+  {value: 'TX', stateName: 'Texas'},
+  {value: 'UT', stateName: 'Utah'},
+  {value: 'VA', stateName: 'Virginia'},
+  {value: 'VT', stateName: 'Vermont'},
+  {value: 'WA', stateName: 'Washington'},
+  {value: 'WI', stateName: 'Wisconsin'},
+  {value: 'WV', stateName: 'West Virginia'},
+  {value: 'WY', stateName: 'Wyoming'}
 ];
 
 class CreateEvent extends Component {
@@ -53,9 +107,11 @@ class CreateEvent extends Component {
       earlyArrivalIndex: 0,
       lastPosition: 'unknown',
       initialPosition: 'unknown',
+      stateNameIndex: 22,
       state:'',
       city:'',
       modal: false,
+      stateModal: false,
       offSet: new Animated.Value(deviceHeight),
       values: ['Driving', 'Walking' , 'Bicycling', 'Transit'],
       date: new Date(),
@@ -80,13 +136,17 @@ class CreateEvent extends Component {
     this.setState({ earlyArrivalIndex });
   }
 
+  changeStateAbbreviation(stateNameIndex) {
+    this.setState({ stateNameIndex });
+  }
+
   clearForm() {
     this.setState({
       modal: false,
       eventName: '',
       eventTime: '',
       address: '',
-      state:'',
+      // state:'',
       city:'',
       earlyArrivalIndex: 0,
     //mode: 'Driving',        //Commented out until refresh unhighlights previous selected segment
@@ -94,14 +154,14 @@ class CreateEvent extends Component {
   }
   //event for button clicked when all fields are filled
   buttonClicked() {
-    if (this.state.eventName && this.state.date && this.state.address && this.state.city && this.state.state && this.state.mode) {
+    if (this.state.eventName && this.state.date && this.state.address && this.state.city && this.state.mode) {
       var newEvent  = {
         mode: this.state.mode,
         eventName: this.state.eventName,
         eventTime: this.state.date.toString(),
         address: this.state.address + ',' ,
         city: this.state.city + ',' ,
-        state: this.state.state ,
+        state: stateNames[this.state.stateNameIndex].value ,
         earlyArrival: earlyArrivalTimes[this.state.earlyArrivalIndex].value,
         userId: this.state.userId,
       };
@@ -109,7 +169,7 @@ class CreateEvent extends Component {
       sendEvent(newEvent);
       this.clearForm();
 
-      var origin   = this.state.initialPosition.coords;
+      var origin = this.state.initialPosition.coords;
       var that = this;
       updateLocation(origin, that);
 
@@ -204,17 +264,31 @@ class CreateEvent extends Component {
                 style={[styles.inputFormat, styles.inputStyle]}
                 onChangeText={(city) => this.setState({city})}/>
             </View>
-            <View style={styles.rowstateContainer}>
-              <TextInput style={styles.textInput}
-                placeholder="St"
-                placeholderTextColor="#F5F5F6"
-                value={this.state.state}
-                style={[styles.inputFormat, styles.inputStyle]}
-                onChangeText={(state) => this.setState({state})}/>
-            </View>
+
+
           </View>
 
-          <View style={styles.inputContainer}>
+            <View style={styles.inputContainer}>
+              <TouchableHighlight
+                style={styles.inputFormat}
+                underlayColor="transparent"
+                onPress={() => { this.state.stateModal ? this.setState({ stateModal: false }) : this.setState({ stateModal: true })}}>
+                <Text style={styles.inputStyle}>
+                  {stateNames[this.state.stateNameIndex].stateName}
+                </Text>
+              </TouchableHighlight>
+                { this.state.stateModal
+                  ? <StatePicker
+                    offSet={this.state.offSet}
+                    stateNameIndex={this.state.stateNameIndex}
+                    closeModal={console.log(':( consistent modal-ing')}
+                    changeStateAbbreviation={this.changeStateAbbreviation.bind(this)}/>
+                  : null
+                }
+            </View>
+
+
+          <View style={this.state.stateModal ? [{ transform: [{translateY: deviceHeight*.7}] }] : styles.inputContainer}>
             <TouchableHighlight
               style={styles.inputFormat}
               underlayColor="transparent"
@@ -236,7 +310,7 @@ class CreateEvent extends Component {
               }
           </View>
 
-          <View style={this.state.dateModal ? [{ transform: [{translateY: deviceHeight*.7}] }] : styles.inputContainer}>
+          <View style={this.state.dateModal || this.state.stateModal ? [{ transform: [{translateY: deviceHeight*.7}] }] : styles.inputContainer}>
             <TouchableHighlight
               style={styles.inputFormat}
               underlayColor="transparent"
@@ -255,7 +329,7 @@ class CreateEvent extends Component {
               }
           </View>
 
-          <View style={(this.state.modal || this.state.dateModal) ? styles.hidden : styles.segmentedContainer}>
+          <View style={(this.state.modal || this.state.dateModal || this.state.stateModal) ? styles.hidden : styles.segmentedContainer}>
             <TextInput
               placeholderTextColor="#F5F5F6"
               placeholder="Mode of Transport"
@@ -274,7 +348,7 @@ class CreateEvent extends Component {
         <TouchableHighlight
           onPress={this.buttonClicked.bind(this)}
           pointerEvents={(this.state.modal || this.state.dateModal) ? 'none' : 'auto'}
-          style={(this.state.modal || this.state.dateModal) ? styles.hidden : styles.submitButton}>
+          style={(this.state.modal || this.state.dateModal || this.state.stateModal) ? styles.hidden : styles.submitButton}>
           <View>
             <Text style={styles.inputStyle}>
               Submit!
