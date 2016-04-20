@@ -24,7 +24,7 @@ class Login extends Component {
       phoneNumber: '',
       signup: false,
       loggedIn: props.loggedIn,
-      // handleClick: props.handlePress,
+      handleClick: props.handlePress,
     };
   }
 

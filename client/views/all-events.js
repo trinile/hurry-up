@@ -10,6 +10,8 @@ import React, {
 
 import {getAllEvents} from '../helpers/request-helpers';
 
+var Icon = require('react-native-vector-icons/Ionicons');
+
 const deviceWidth = Dimensions.get('window').width;
 
 class AllEvents extends Component {
@@ -33,6 +35,11 @@ class AllEvents extends Component {
     var that = this;
     getAllEvents(that);
     this.render();
+  }
+
+  getDirections() {
+    var that = this;
+    console.log('button clicked for directions');
   }
 
   displayTime(time) {
@@ -72,7 +79,12 @@ class AllEvents extends Component {
                 <View style={styles.EventInput}>
                   <Text style={styles.EventText}>{event.mode}</Text>
                 </View>
-              </View>
+              </View>      
+              <View style={styles.EventRow}>
+                <Icon.Button name="android-walk" backgroundColor="#3b5998" onPress={this.getDirections}>
+                  <Text style={styles.buttonText}>Directions</Text>
+                </Icon.Button>  
+              </View>  
             </View>
           )}
           <Text style={styles.welcome}>no more events</Text>
@@ -138,6 +150,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'HelveticaNeue-Light',
   },
+
+  iconButton: {
+    padding: 15,
+    width: deviceWidth,
+    alignItems: 'center',
+    backgroundColor: '#34778A',
+  }
 });
 
 export default AllEvents;
