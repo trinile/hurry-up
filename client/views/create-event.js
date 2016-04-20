@@ -20,6 +20,7 @@ console.ignoredYellowBox = [
 
 import Picker from './picker';
 import DatePicker from './datePicker';
+import StatePicker from './statePicker';
 import {sendEvent, updateLocation} from '../helpers/request-helpers';
 
 const DISTANCE_TO_REFRESH = 0.004;
