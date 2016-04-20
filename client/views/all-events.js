@@ -9,6 +9,7 @@ import React, {
 } from 'react-native';
 
 import {getAllEvents} from '../helpers/request-helpers';
+import Directions from './directions-event';
 
 var Icon = require('react-native-vector-icons/Ionicons');
 
@@ -84,7 +85,8 @@ class AllEvents extends Component {
                 <Icon.Button name="android-walk" backgroundColor="#3b5998" onPress={this.getDirections}>
                   <Text style={styles.buttonText}>Directions</Text>
                 </Icon.Button>  
-              </View>  
+              </View>
+              <Directions event = {event} />
             </View>
           )}
           <Text style={styles.welcome}>no more events</Text>
@@ -100,13 +102,12 @@ class AllEvents extends Component {
     );
   }
 };
-
 const styles = StyleSheet.create({
   EventContainer: {
     flex: 1,
     margin: 7,
     padding: 15,
-    height: 150,
+    height: 250,
     borderWidth: 1,
     borderColor: 'transparent',
     borderBottomColor: '#F5F5F6',
