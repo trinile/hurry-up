@@ -23,9 +23,11 @@ export const createUser = (newUser, context) => {
     body: JSON.stringify(newUser),
   })
   .then((response) => {
-    var res = JSON.parse(response._bodyText);
-    if (res.success) {
-      context.state.handleClick(res.id);
+    return response.json();
+  })
+  .then((actualResponse) => {
+    if (actualResponse.success) {
+      context.state.handleClick(actualResponse.id);
     }
   })
   .catch((error) => console.warn('Error creating user', error));
@@ -41,9 +43,11 @@ export const login = (user, context) => {
     body: JSON.stringify(user),
   })
   .then((response) => {
-    var res = JSON.parse(response._bodyText);
-    if (res.success) {
-      context.state.handleClick(res.id);
+    return response.json();
+  })
+  .then((actualResponse) => {
+    if (actualResponse.success) {
+      context.state.handleClick(actualResponse.id);
     }
   })
   .catch((error) => console.warn('Error creating user', error));
@@ -61,13 +65,17 @@ export const updateLocation = (origin, context) => {
     body: JSON.stringify({ origin: origin }),
   })
   .then((response) => {
-    var res = JSON.parse(response._bodyText);
-    if (res.clearWatch) { navigator.geolocation.clearWatch(context.watchID); }
-    console.log('Location PUT response: ', response);
+    return response.json();
+  })
+  .then((actualResponse) => {
+    if (actualResponse.clearWatch) { 
+      navigator.geolocation.clearWatch(context.watchID); 
+      console.log('Location PUT response: ', actualResponse);
+    }
   })
   .catch((error) => console.warn('Unable to send phone location', error));
 };
-
+ 
 export const getAllEvents = (context) => {
   // TODO: grab user id from login session(?)
 console.log('STATED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', context.state.userId);
@@ -80,9 +88,11 @@ console.log('STATED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', context.state.userId);
     },
   })
   .then((response) => {
-    var res = JSON.parse(response._bodyText);
-    context.setState( { events: res } );
-    console.log('All Events GET response: ', response);
+    return response.json();
+  })
+  .then((actualResponse) => {
+    context.setState( { events: actualResponse } );
+    console.log('All Events GET response: ', actualResponse);
   })
   .catch((error) => console.warn('Unable to get user events', error));
 };
