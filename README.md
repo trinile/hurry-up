@@ -10,15 +10,17 @@ The goal of hurry-up is to make sure you are never late to an appointment again.
 #### Client-side specifics
 
 1. Run `npm start` to start the React Native server.
-2. To open the project in Xcode:
-..1.`open ios/hurryup.xcodeproj`
-..2. Or in the command line `react-native run-ios`
-3. Click 'Build and Run (PLAY BUTTON)' to open the application in the simulator
- ..* Immediately got to Debug -> Simulate Location -> San Francisco, CA (or choose other locations). 
- ..* App will be unable to retrieve location if no location is simulated.
-4. This application has only been tested on iPhone 5 and 6 models. 
-..* Visual elements will not display correctly on older models.
-..* Note: Xcode 7.3 required for IOS 9.3.1 and above to test on iphone directly.
+
+#### To Simulate App on XCODE
+1. To open the project in Xcode:
+ 1. `open ios/hurryup.xcodeproj`
+ 2. Or in the command line `react-native run-ios`
+2. Click 'Build and Run (PLAY BUTTON)' to open the application in the simulator
+ * Immediately got to Debug -> Simulate Location -> San Francisco, CA (or choose other locations). 
+ * App will be unable to retrieve location if no location is simulated.
+3. This application has only been tested on iPhone 5 and 6 models. 
+ * Visual elements will not display correctly on older models.
+ * Note: Xcode 7.3 required for IOS 9.3.1 and above to test on iphone directly.
 
 #####Non-platform specific commands:
 
