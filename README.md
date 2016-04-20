@@ -44,6 +44,7 @@ var API_KEYS = {
 module.exports = API_KEYS;
 ```
 Make sure the Twilio phone number is ten digits, with a leading + sign and no dashes - for example: '+14151234567'
+<<<<<<< HEAD
 
 Create Twilio Phone Number
 
