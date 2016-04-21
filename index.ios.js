@@ -23,7 +23,7 @@ const deviceHeight = Dimensions.get('window').height;
 const ControlPanel = require('./client/views/ControlPanel');
 const Button = require('./client/views/Button');
 
-class hurryup extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,12 +41,7 @@ class hurryup extends Component {
     this.render();
   }
 
-  getEvents() {
-    var that = this;
-    getAllEvents(that);
-  }
-
-  render() {
+  render () {
     return (
       <View style={styles.parent}>
         <Image
@@ -78,6 +73,32 @@ class hurryup extends Component {
             </ScrollableTabView>)
         }
       </View>
+    );
+  }
+}
+
+class hurryup extends Component {
+
+  closeControlPanel = () => {
+    this._drawer.close();
+  };
+  
+  openControlPanel = () => {
+    this._drawer.open();
+  }
+  
+  render() {
+    return (
+    <Drawer
+      ref={(ref) => this._drawer = ref}
+      type="static"
+      content={<ControlPanel closeDrawer={()=>{this._drawer.close()}} />}
+      openDrawerOffset={100}
+      styles={{main: {shadowColor: "#000000", shadowOpacity: 0.4, shadowRadius: 3}}}
+      tweenHandler={Drawer.tweenPresets.parallax}
+      >
+        <Main />
+    </Drawer>
     );
   }
 }
