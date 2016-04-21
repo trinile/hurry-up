@@ -9,6 +9,8 @@ import React, {
 } from 'react-native';
 
 import {getAllEvents} from '../helpers/request-helpers';
+import {getDirections} from '../helpers/request-helpers';
+
 import Directions from './directions-event';
 
 var Icon = require('react-native-vector-icons/Ionicons');
@@ -23,6 +25,7 @@ class AllEvents extends Component {
     this.state = {
       events: [],
       userId: props.userId,
+      directions: 'unknown'
     };
   }
 
@@ -38,8 +41,21 @@ class AllEvents extends Component {
     this.render();
   }
 
-  getDirections() {
+  getDirections(event) {
+    console.log('event city = ' + event.city);
     var that = this;
+    navigator.geolocation.getCurrentPosition((position) => {
+
+      // getDirections
+      getDirections(event, position, that);
+      console.log('currentPosition response = ' + position);
+      
+    },
+    (error) => alert(error.message),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
+
+
+
     console.log('button clicked for directions');
   }
 
@@ -82,7 +98,7 @@ class AllEvents extends Component {
                 </View>
               </View>      
               <View style={styles.EventRow}>
-                <Icon.Button name="android-walk" backgroundColor="#3b5998" onPress={this.getDirections}>
+                <Icon.Button name="android-walk" backgroundColor="#3b5998" onPress={this.getDirections.bind(this, event)}>
                   <Text style={styles.buttonText}>Directions</Text>
                 </Icon.Button>  
               </View>

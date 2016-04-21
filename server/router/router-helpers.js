@@ -3,7 +3,9 @@ var Users        = require('../app/collections/users.js');
 var Event        = require('../app/models/event.js');
 var bcrypt       = require('bcrypt');
 var googleWorker = require('../workers/google-api-call.js');
+var request = require('request');
 var SALT_WORK_FACTOR = 10;
+var API_KEYS = require('../api_keys.js');
 
 exports.addEvent = function(req, res) {
   var mode         = req.body.mode;
@@ -170,3 +172,61 @@ exports.signup = function(req, res) {
       }
     });
 };
+
+exports.getEventDirections = function(req, res) {
+
+  console.log('inside getEventDirections');
+
+  var position = req.body.position;
+  var event = req.body.event;
+
+    //split into each field
+  var originLat = position.coords.latitude;     //37.773972
+  var originLong = position.coords.longitude;    //-122.431297
+  //'1118FolsomStreet,SanFrancisco,CA' Doesnt actually need spaces removed, but regex practice is nice;
+  var eventAddress = event.address.replace(/\s/g, '') + event.city.replace(/\s/g, '') + event.state;
+  var travelMode = event.mode.toLowerCase();          //'driving';
+
+
+  console.log('origin: ', originLat + ',' + originLong);
+  console.log('destination ', eventAddress);
+  console.log('travelmode ', travelMode);
+
+  // Get routes time duration from Google API
+  var apiRequest = 'https://maps.googleapis.com/maps/api/directions/json?' +
+    'origin=' + originLat + ',' + originLong +
+    '&destination=' + eventAddress +
+    '&mode=' + travelMode +
+    '&key=' + API_KEYS.googleAPI;
+
+  request(apiRequest, function(err, res, body) {
+
+
+    var parsedBody = JSON.parse(body);
+    
+    console.log('response from google directions: ', parsedBody);
+    console.log(parsedBody.routes[0].legs[0].steps[0].html_instructions);
+
+    var steps = parsedBody.routes[0].legs[0].steps;
+
+    var arr = steps.map(function(step) {
+      return {
+        instructions: step.html_instructions,
+        duration: step.duration.text
+      }
+    });
+
+    var leg = {
+      endAddress : parsedBody.routes[0].legs[0].end_address,
+      startAddress : parsedBody.routes[0].legs[0].start_address,
+      durationText : parsedBody.routes[0].legs[0].duration.text,
+      distanceText : parsedBody.routes[0].legs[0].distance.text
+    }
+
+    console.log('leg = ', leg);
+    console.log('arr = ', arr);
+
+  });
+
+
+}
