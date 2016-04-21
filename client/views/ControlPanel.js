@@ -2,8 +2,11 @@ import React, {
   Text,
   View,
   SwitchIOS, 
-  Component
+  Component,
+  Navigator
 } from 'react-native';
+
+import CreateEvent from './create-event';
 
 var styles = require('../styles/styles');
 var Button = require('./Button');
@@ -15,13 +18,10 @@ class ControlPanel extends Component {
   render() {
     return (
       <View style={styles.controlPanel}>
-        <Text style={styles.controlPanelWelcome}>
-          Control Panel
-        </Text>
-        <Button
-          onPress={this.props.createEvent.bind(this,this.props.userId)}
-          text="Create Event"
-          />
+        <Navigator
+          style={styles.container}
+          initialRoute=
+        
       </View>
     );
   }

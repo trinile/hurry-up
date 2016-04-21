@@ -55,16 +55,12 @@ class hurryup extends Component {
     <Drawer
       ref={(ref) => this._drawer = ref}
       type="static"
-      content={<ControlPanel 
-        closeDrawer={()=>{this._drawer.close()}} 
-        createEvent={()=><CreateEvent userId={this.props.userId}/>
-      }
-        />}
+      content={<ControlPanel userId={this.state.userId} />}
       openDrawerOffset={100}
       styles={{main: {shadowColor: "#000000", shadowOpacity: 0.4, shadowRadius: 3}}}
       tweenHandler={Drawer.tweenPresets.parallax}
-      >
-        <Main loggedIn={this.state.loggedIn} userId={this.state.userId} handleSignIn={this.handleSignIn} />
+    >
+      <Main loggedIn={this.state.loggedIn} userId={this.state.userId} handleSignIn={this.handleSignIn.bind(this)} />
     </Drawer>
     );
   }
