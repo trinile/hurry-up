@@ -12,7 +12,7 @@ import {getAllEvents} from '../helpers/request-helpers';
 import {getDirections} from '../helpers/request-helpers';
 
 import Directions from './directions-event';
-
+import Event from './event-row';
 var Icon = require('react-native-vector-icons/Ionicons');
 
 const deviceWidth = Dimensions.get('window').width;
@@ -24,8 +24,7 @@ class AllEvents extends Component {
 
     this.state = {
       events: [],
-      userId: props.userId,
-      directions: 'unknown'
+      userId: props.userId
     };
   }
 
@@ -41,70 +40,13 @@ class AllEvents extends Component {
     this.render();
   }
 
-  getDirections(event) {
-    console.log('event city = ' + event.city);
-    var that = this;
-    navigator.geolocation.getCurrentPosition((position) => {
-
-      // getDirections
-      getDirections(event, position, that);
-      console.log('currentPosition response = ' + position);
-      
-    },
-    (error) => alert(error.message),
-    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
-
-
-
-    console.log('button clicked for directions');
-  }
-
-  displayTime(time) {
-    var dateTime = time.toString();
-    var hours = dateTime.substring(16,18);
-    var postfix;
-    if (Number(hours) > 12) {
-      postfix = 'PM';
-      hours = hours - 12;
-    } else {
-      postfix = 'AM';
-    }
-    var minutes = dateTime.substring(19,21);
-    return hours + ':' + minutes + ' ' + postfix;
-  }
-
   render() {
     return (
       <View style={{flex: 1}}>
         <ScrollView>
-          {this.state.events.map((event, index) =>
-            <View style={styles.EventContainer} key={index}>
-              <View style={styles.EventRow}>
-                <Text style={styles.EventTitle}>Event:</Text>
-                <View style={styles.EventInput}>
-                  <Text style={styles.EventText}>{event.eventName} @ {this.displayTime(event.eventTime)} on {event.eventTime.substring(0,10)}</Text>
-                </View>
-              </View>
-              <View style={styles.EventRow}>
-                <Text style={styles.EventTitle}>Where: </Text>
-                <View style={styles.EventInput}>
-                  <Text style={styles.EventText}>{event.address} {event.city} {event.state}</Text>
-                </View>
-              </View>
-              <View style={styles.EventRow}>
-                <Text style={styles.EventTitle}>Getting there by: </Text>
-                <View style={styles.EventInput}>
-                  <Text style={styles.EventText}>{event.mode}</Text>
-                </View>
-              </View>      
-              <View style={styles.EventRow}>
-                <Icon.Button name="android-walk" backgroundColor="#3b5998" onPress={this.getDirections.bind(this, event)}>
-                  <Text style={styles.buttonText}>Directions</Text>
-                </Icon.Button>  
-              </View>
-              <Directions event = {event} />
-            </View>
-          )}
+        {this.state.events.map((event, index) => 
+          <Event key = {index} event={event}/>
+        )}
           <Text style={styles.welcome}>no more events</Text>
         </ScrollView>
         <TouchableHighlight
