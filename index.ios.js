@@ -15,6 +15,8 @@ import AllEvents from './client/views/all-events';
 import CreateEvent from './client/views/create-event';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
+import {getAllEvents} from './client/helpers/request-helpers';
+
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
@@ -23,7 +25,8 @@ class hurryup extends Component {
     super(props);
     this.state = {
       loggedIn: false,
-      userId: null
+      userId: null,
+      events: [],
     };
   }
 
@@ -31,8 +34,13 @@ class hurryup extends Component {
     this.setState({
       loggedIn: true,
       userId: userId
-    });
+    }, this.getEvents.bind(this));
     this.render();
+  }
+
+  getEvents() {
+    var that = this;
+    getAllEvents(that);
   }
 
   render() {
@@ -54,7 +62,7 @@ class hurryup extends Component {
               tabBarBackgroundColor="transparent"
               tabBarTextStyle={{fontFamily: 'HelveticaNeue-Light', fontSize: 15}}>
               <CreateEvent userId = {this.state.userId} tabLabel='Create Event' />
-              <AllEvents userId = {this.state.userId} tabLabel='My Events' />
+              <AllEvents userId = {this.state.userId} tabLabel='My Events' events = {this.state.events} getEvents = {this.getEvents.bind(this)} />
             </ScrollableTabView>)
           : (<ScrollableTabView
               style={{marginTop: 0, top: 0}}

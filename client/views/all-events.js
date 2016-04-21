@@ -8,7 +8,7 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-import {getAllEvents} from '../helpers/request-helpers';
+// import {getAllEvents} from '../helpers/request-helpers';
 import {getDirections} from '../helpers/request-helpers';
 
 import Directions from './directions-event';
@@ -23,7 +23,6 @@ class AllEvents extends Component {
     super(props);
 
     this.state = {
-      events: [],
       userId: props.userId
     };
   }
@@ -44,7 +43,7 @@ class AllEvents extends Component {
     return (
       <View style={{flex: 1}}>
         <ScrollView>
-        {this.state.events.map((event, index) => 
+        {this.props.events.map((event, index) => 
           <Event key = {index} event={event}/>
         )}
           <Text style={styles.welcome}>no more events</Text>
