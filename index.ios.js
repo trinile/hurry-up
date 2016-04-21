@@ -14,11 +14,14 @@ import Login from './client/views/signin';
 import AllEvents from './client/views/all-events';
 import CreateEvent from './client/views/create-event';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import Drawer from 'react-native-drawer';
 
 import {getAllEvents} from './client/helpers/request-helpers';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
+const ControlPanel = require('./client/views/ControlPanel');
+const Button = require('./client/views/Button');
 
 class hurryup extends Component {
   constructor(props) {
