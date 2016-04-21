@@ -21,7 +21,6 @@ class Main extends Component {
     super(props);
   }
   render () {
-    console.log('main props', this.props);
     return (
       <View style={styles.parent}>
         <Image

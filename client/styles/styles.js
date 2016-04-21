@@ -2,6 +2,10 @@ var { StyleSheet, PixelRatio } = require('react-native');
 var deviceScreen = require('Dimensions').get('window');
 
 module.exports = StyleSheet.create({
+  navigator: {
+    paddingTop: 80,
+    paddingLeft: 20,
+  },
   scrollView: {
     backgroundColor: '#B99BC4',
   },
