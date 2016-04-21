@@ -165,7 +165,7 @@ class CreateEvent extends Component {
         userId: this.state.userId,
       };
       //call sendEvent
-      sendEvent(newEvent);
+      sendEvent(newEvent, this.props.getEvents);
       this.clearForm();
 
       var origin = this.state.initialPosition.coords;

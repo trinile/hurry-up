@@ -1,6 +1,6 @@
 /* Use  path 104.236.147.132 instead of localhost in production mode*/
 
-export const sendEvent = (newEvent) => {
+export const sendEvent = (newEvent, cb) => {
   fetch('http://localhost:8080/api/events' , {
     method: 'POST',
     headers: {
@@ -9,7 +9,15 @@ export const sendEvent = (newEvent) => {
     },
     body: JSON.stringify(newEvent),
   })
-  .then((response) => console.log('Event POST response: ', response))
+  .then((response) => {
+    console.log('Event POST response: ', response);
+    if (cb) {
+      console.log('do callback branch in sendEvent');
+      cb();
+    } else {
+      console.log('callback not defined in sendEvent');
+    }
+  })
   .catch((error) => console.warn('Unable to send event', error));
 };
 
