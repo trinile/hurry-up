@@ -5,11 +5,12 @@ import React, {
   Dimensions,
   ScrollView,
   StyleSheet,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 
 // import {getAllEvents} from '../helpers/request-helpers';
 import {getDirections} from '../helpers/request-helpers';
+
 
 import Directions from './directions-event';
 import Event from './event-row';

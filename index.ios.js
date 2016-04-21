@@ -7,7 +7,6 @@ import React, {
   Dimensions,
   StyleSheet,
   AppRegistry,
-  TouchableHighlight,
 } from 'react-native';
 
 import Main from './client/views/Main';
@@ -15,8 +14,6 @@ import Login from './client/views/signin';
 import AllEvents from './client/views/all-events';
 import CreateEvent from './client/views/create-event';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import Drawer from 'react-native-drawer';
-import ControlPanel from './client/views/ControlPanel';
 
 import {getAllEvents} from './client/helpers/request-helpers';
 
@@ -41,27 +38,21 @@ class hurryup extends Component {
     }, this.getEvents.bind(this));
     this.render();
   }
-
-  closeControlPanel = () => {
-    this._drawer.close();
-  };
-  
-  openControlPanel = () => {
-    this._drawer.open();
-  }
   
   render() {
     return (
-    <Drawer
-      ref={(ref) => this._drawer = ref}
-      type="static"
-      content={<ControlPanel userId={this.state.userId} />}
-      openDrawerOffset={100}
-      styles={{main: {shadowColor: "#000000", shadowOpacity: 0.4, shadowRadius: 3}}}
-      tweenHandler={Drawer.tweenPresets.parallax}
-    >
-      <Main loggedIn={this.state.loggedIn} userId={this.state.userId} handleSignIn={this.handleSignIn.bind(this)} />
-    </Drawer>
+      <View style={styles.parent}>
+        <Image
+          style={styles.bg}
+          source={require('./client/background.png')}/>
+        <Text style={styles.welcome}> 
+          hurryup
+        </Text>
+        {this.state.loggedIn
+          ? (<Main loggedIn={this.state.loggedIn} userId={this.state.userId} />)
+          : (<Login loggedIn={this.state.loggedIn} handlePress ={this.handleSignIn.bind(this)} tabLabel=''/>)
+        }
+      </View>
     );
   }
 }
