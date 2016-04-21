@@ -96,3 +96,32 @@ console.log('STATED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', context.state.userId);
   })
   .catch((error) => console.warn('Unable to get user events', error));
 };
+
+export const getDirections = (event, position, that) => {
+
+  var directionsParams = {
+    event: event,
+    position: position
+  };
+
+  fetch('http://localhost:8080/api/directions', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(directionsParams)
+  })
+  .then((response) => {
+    console.log('inside success of api/directions');
+    debugger;
+    return response.json();
+  })
+  .then((actualResponse) => {
+    console.log('inside success actualResponse api/directions');
+    //if (actualResponse.success) {
+    context.setState( {directions: actualResponse});
+    //}
+  })
+  .catch((error) => console.warn('Error creating user', error));
+};
