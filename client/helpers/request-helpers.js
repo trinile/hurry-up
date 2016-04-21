@@ -97,7 +97,7 @@ console.log('STATED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', context.state.userId);
   .catch((error) => console.warn('Unable to get user events', error));
 };
 
-export const getDirections = (event, position, that) => {
+export const getDirections = (event, position, context) => {
 
   var directionsParams = {
     event: event,
@@ -114,13 +114,13 @@ export const getDirections = (event, position, that) => {
   })
   .then((response) => {
     console.log('inside success of api/directions');
-    debugger;
     return response.json();
   })
   .then((actualResponse) => {
     console.log('inside success actualResponse api/directions');
     //if (actualResponse.success) {
-    context.setState( {directions: actualResponse});
+    console.log('resp of directions ', actualResponse);
+    context.setState( {directions: actualResponse, toggleDirections: true });
     //}
   })
   .catch((error) => console.warn('Error creating user', error));
