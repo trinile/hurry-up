@@ -11,14 +11,16 @@ import React, {
 
 import {getAllEvents} from '../helpers/request-helpers';
 import {getDirections} from '../helpers/request-helpers';
+import navHelper from '../helpers/Navigation';
 import Drawer from 'react-native-drawer';
 import ControlPanel from './ControlPanel';
 import Menu from './Menu';
+import AllEvents from './all-events';
 
 import Directions from './directions-event';
 
-var Icon = require('react-native-vector-icons/Ionicons');
-var hamburgerIcon = (<Icon name="ion-navicon-round" size={30} color="#900" />);
+var Icon = require('react-native-vector-icons/FontAwesome');
+var hamburgerIcon = (<Icon name="rocket" size={30} color="#900" />);
 const deviceWidth = Dimensions.get('window').width;
 
 class Main extends Component {
@@ -31,6 +33,11 @@ class Main extends Component {
       userId: props.userId,
       directions: 'unknown'
     };
+  }
+  
+  _navigate(route) {
+    this._navigator.push(navHelper(route));
+    this._drawer.close();
   }
 
   componentDidMount() {
@@ -82,7 +89,7 @@ class Main extends Component {
       <Drawer
         ref={(ref) => this._drawer = ref}
         type="overlay"
-        content={<Menu />}
+        content={<Menu navigate={(route) => { this._navigate(route)} }/>}
         tapToClose={true}
         openDrawerOffset={0.2}
         panCloseMask={0.2}
@@ -98,8 +105,8 @@ class Main extends Component {
           ref={(ref) => this._navigator = ref}
           style={{flex: 1}}
           initialRoute={{
-              title: 'Home',
-              component: Home,
+              title: 'My Events',
+              component: AllEvents,
               leftButtonIcon: hamburgerIcon,
               onLeftButtonPress: () => { this._drawer.open() }
           }}/>

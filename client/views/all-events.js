@@ -10,12 +10,15 @@ import React, {
 
 // import {getAllEvents} from '../helpers/request-helpers';
 import {getDirections} from '../helpers/request-helpers';
-
-
 import Directions from './directions-event';
+<<<<<<< HEAD
 import Event from './event-row';
 var Icon = require('react-native-vector-icons/Ionicons');
+=======
 
+>>>>>>> Progress on hamburger menu
+
+var Icon = require('react-native-vector-icons/Ionicons');
 const deviceWidth = Dimensions.get('window').width;
 
 class AllEvents extends Component {
@@ -35,9 +38,40 @@ class AllEvents extends Component {
 
   buttonClicked() {
     //look into using websockets instead of refresh button / or state control
-    // var that = this;
-    // getAllEvents(that);
-    this.props.getEvents();
+
+    var that = this;
+    getAllEvents(that);
+    this.render();
+  }
+
+  getDirections(event) {
+    console.log('event city = ' + event.city);
+    var that = this;
+    navigator.geolocation.getCurrentPosition((position) => {
+
+      // getDirections
+      getDirections(event, position, that);
+      console.log('currentPosition response = ' + position);
+      
+    },
+    (error) => alert(error.message),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
+
+    console.log('button clicked for directions');
+  }
+
+  displayTime(time) {
+    var dateTime = time.toString();
+    var hours = dateTime.substring(16,18);
+    var postfix;
+    if (Number(hours) > 12) {
+      postfix = 'PM';
+      hours = hours - 12;
+    } else {
+      postfix = 'AM';
+    }
+    var minutes = dateTime.substring(19,21);
+    return hours + ':' + minutes + ' ' + postfix;
   }
 
   render() {
