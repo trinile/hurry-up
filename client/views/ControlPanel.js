@@ -1,15 +1,17 @@
-var React = require('react-native');
-
-var {
-  SwitchIOS,
+import React, {
+  Text,
   View,
-  Text
-} = React;
+  SwitchIOS, 
+  Component
+} from 'react-native';
 
 var styles = require('../styles/styles');
 var Button = require('./Button');
 
-module.exports = React.createClass({
+class ControlPanel extends Component {
+  constructor(props){
+    super(props)
+  }
   render() {
     return (
       <View style={styles.controlPanel}>
@@ -17,10 +19,12 @@ module.exports = React.createClass({
           Control Panel
         </Text>
         <Button
-          onPress={this.props.closeDrawer}
-          text="Close Drawer"
+          onPress={this.props.createEvent.bind(this,this.props.userId)}
+          text="Create Event"
           />
       </View>
     );
   }
-});
+}
+
+export default ControlPanel;

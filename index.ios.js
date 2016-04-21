@@ -10,20 +10,21 @@ import React, {
   TouchableHighlight,
 } from 'react-native';
 
+import Main from './client/views/Main';
 import Login from './client/views/signin';
 import AllEvents from './client/views/all-events';
 import CreateEvent from './client/views/create-event';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import Drawer from 'react-native-drawer';
+import ControlPanel from './client/views/ControlPanel';
 
 import {getAllEvents} from './client/helpers/request-helpers';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
-const ControlPanel = require('./client/views/ControlPanel');
 const Button = require('./client/views/Button');
 
-class Main extends Component {
+class hurryup extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +33,7 @@ class Main extends Component {
       events: [],
     };
   }
-
+  
   handleSignIn(userId) {
     this.setState({
       loggedIn: true,
@@ -40,44 +41,6 @@ class Main extends Component {
     }, this.getEvents.bind(this));
     this.render();
   }
-
-  render () {
-    return (
-      <View style={styles.parent}>
-        <Image
-          style={styles.bg}
-          source={require('./client/background.png')}/>
-        <Text style={styles.welcome}>
-          hurryup
-        </Text>
-        {this.state.loggedIn
-          ? (<ScrollableTabView
-              page={1}
-              style={{marginTop: 0, top: 0}}
-              tabBarUnderlineColor="#F5F5F6"
-              tabBarActiveTextColor="#F5F5F6"
-              tabBarInactiveTextColor="#ACB2BE"
-              tabBarBackgroundColor="transparent"
-              tabBarTextStyle={{fontFamily: 'HelveticaNeue-Light', fontSize: 15}}>
-              <CreateEvent userId = {this.state.userId} tabLabel='Create Event' events = {this.state.events} getEvents = {this.getEvents.bind(this)}/>
-              <AllEvents userId = {this.state.userId} tabLabel='My Events' events = {this.state.events} getEvents = {this.getEvents.bind(this)} />
-            </ScrollableTabView>)
-          : (<ScrollableTabView
-              style={{marginTop: 0, top: 0}}
-              tabBarUnderlineColor="#F5F5F6"
-              tabBarActiveTextColor="#F5F5F6"
-              tabBarInactiveTextColor="#ACB2BE"
-              tabBarBackgroundColor="transparent"
-              tabBarTextStyle={{fontFamily: 'HelveticaNeue-Light', fontSize: 15}}>
-              <Login loggedIn = {this.state.loggedIn} handlePress = {this.handleSignIn.bind(this)} tabLabel=''/>
-            </ScrollableTabView>)
-        }
-      </View>
-    );
-  }
-}
-
-class hurryup extends Component {
 
   closeControlPanel = () => {
     this._drawer.close();
@@ -92,12 +55,16 @@ class hurryup extends Component {
     <Drawer
       ref={(ref) => this._drawer = ref}
       type="static"
-      content={<ControlPanel closeDrawer={()=>{this._drawer.close()}} />}
+      content={<ControlPanel 
+        closeDrawer={()=>{this._drawer.close()}} 
+        createEvent={()=><CreateEvent userId={this.props.userId}/>
+      }
+        />}
       openDrawerOffset={100}
       styles={{main: {shadowColor: "#000000", shadowOpacity: 0.4, shadowRadius: 3}}}
       tweenHandler={Drawer.tweenPresets.parallax}
       >
-        <Main />
+        <Main loggedIn={this.state.loggedIn} userId={this.state.userId} handleSignIn={this.handleSignIn} />
     </Drawer>
     );
   }
