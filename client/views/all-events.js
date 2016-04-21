@@ -8,7 +8,7 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-import {getAllEvents} from '../helpers/request-helpers';
+// import {getAllEvents} from '../helpers/request-helpers';
 import {getDirections} from '../helpers/request-helpers';
 
 import Directions from './directions-event';
@@ -23,28 +23,27 @@ class AllEvents extends Component {
     super(props);
 
     this.state = {
-      events: [],
       userId: props.userId
     };
   }
 
-  componentDidMount() {
-    var that = this;
-    getAllEvents(that);
-  }
+  // componentDidMount() {
+  //   var that = this;
+  //   getAllEvents(that);
+  // }
 
   buttonClicked() {
     //look into using websockets instead of refresh button / or state control
-    var that = this;
-    getAllEvents(that);
-    this.render();
+    // var that = this;
+    // getAllEvents(that);
+    this.props.getEvents();
   }
 
   render() {
     return (
       <View style={{flex: 1}}>
         <ScrollView>
-        {this.state.events.map((event, index) => 
+        {this.props.events.map((event, index) => 
           <Event key = {index} event={event}/>
         )}
           <Text style={styles.welcome}>no more events</Text>
