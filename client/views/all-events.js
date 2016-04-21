@@ -34,9 +34,9 @@ class AllEvents extends Component {
 
   buttonClicked() {
     //look into using websockets instead of refresh button / or state control
-    var that = this;
-    getAllEvents(that);
-    this.render();
+    // var that = this;
+    // getAllEvents(that);
+    this.props.getEvents();
   }
 
   render() {
