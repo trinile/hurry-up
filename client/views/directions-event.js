@@ -20,7 +20,7 @@ id:1
 mode:"Walking"
 state:"CA"
 twilioSent:"false"
-userId:3
+userId: 3
 */
 const windowSize = Dimensions.get('window');
 
