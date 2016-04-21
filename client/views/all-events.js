@@ -27,10 +27,10 @@ class AllEvents extends Component {
     };
   }
 
-  componentDidMount() {
-    var that = this;
-    getAllEvents(that);
-  }
+  // componentDidMount() {
+  //   var that = this;
+  //   getAllEvents(that);
+  // }
 
   buttonClicked() {
     //look into using websockets instead of refresh button / or state control

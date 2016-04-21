@@ -62,7 +62,7 @@ class hurryup extends Component {
               tabBarBackgroundColor="transparent"
               tabBarTextStyle={{fontFamily: 'HelveticaNeue-Light', fontSize: 15}}>
               <CreateEvent userId = {this.state.userId} tabLabel='Create Event' />
-              <AllEvents userId = {this.state.userId} tabLabel='My Events' events = {this.state.events} getEvents = {this.getEvents.bind(this)} />
+              <AllEvents userId = {this.state.userId} tabLabel='My Events' events = {this.state.events} />
             </ScrollableTabView>)
           : (<ScrollableTabView
               style={{marginTop: 0, top: 0}}
