@@ -133,8 +133,8 @@ exports.login = function(req, res) {
 };
 
 exports.signup = function(req, res) {
-  var username    = req.body.username;
-  var password    = req.body.password;
+  var username = req.body.username;
+  var password = req.body.password;
   var phoneNumber = '+1' + req.body.phoneNumber; // Add +1 to beggining for use with twilio
   // check username against db to avoid duplicate users
   new User({ username: username })
@@ -148,7 +148,7 @@ exports.signup = function(req, res) {
             console.log('Could not create salt', err);
             res.status(404).send(err);
           } else {
-            bcrypt.hash(password, salt, function(err, hashedPassword){
+            bcrypt.hash(password, salt, function(err, hashedPassword) {
               if (err) {
                 console.log('Could not hash password', err);
                 res.status(404).send(err);
@@ -159,7 +159,7 @@ exports.signup = function(req, res) {
                   phoneNumber: phoneNumber
                 })
                 .then(function(user) {
-                  res.status(201).send({id : user.attributes.id, success: true});
+                  res.status(201).send({id: user.attributes.id, success: true});
                 })
                 .catch(function(err) {
                   console.error('Error signing up new user', err);
@@ -173,7 +173,7 @@ exports.signup = function(req, res) {
     });
 };
 
-exports.getEventDirections = function(req, res) {
+exports.getEventDirections = function(req, response) {
 
   console.log('inside getEventDirections');
 
@@ -187,11 +187,6 @@ exports.getEventDirections = function(req, res) {
   var eventAddress = event.address.replace(/\s/g, '') + event.city.replace(/\s/g, '') + event.state;
   var travelMode = event.mode.toLowerCase();          //'driving';
 
-
-  console.log('origin: ', originLat + ',' + originLong);
-  console.log('destination ', eventAddress);
-  console.log('travelmode ', travelMode);
-
   // Get routes time duration from Google API
   var apiRequest = 'https://maps.googleapis.com/maps/api/directions/json?' +
     'origin=' + originLat + ',' + originLong +
@@ -201,32 +196,30 @@ exports.getEventDirections = function(req, res) {
 
   request(apiRequest, function(err, res, body) {
 
-
     var parsedBody = JSON.parse(body);
     
-    console.log('response from google directions: ', parsedBody);
-    console.log(parsedBody.routes[0].legs[0].steps[0].html_instructions);
-
     var steps = parsedBody.routes[0].legs[0].steps;
 
-    var arr = steps.map(function(step) {
+    var arrSteps = steps.map(function(step) {
+      var regex = /(<([^>]+)>)/ig;
+      var body = step.html_instructions;
+      var result = body.replace(regex, '');
+      console.log('steps regex ', result);
       return {
-        instructions: step.html_instructions,
+        instructions: result,
         duration: step.duration.text
-      }
+      };
     });
 
     var leg = {
-      endAddress : parsedBody.routes[0].legs[0].end_address,
-      startAddress : parsedBody.routes[0].legs[0].start_address,
-      durationText : parsedBody.routes[0].legs[0].duration.text,
-      distanceText : parsedBody.routes[0].legs[0].distance.text
-    }
+      endAddress: parsedBody.routes[0].legs[0].end_address,
+      startAddress: parsedBody.routes[0].legs[0].start_address,
+      durationText: parsedBody.routes[0].legs[0].duration.text,
+      distanceText: parsedBody.routes[0].legs[0].distance.text
+    };
 
-    console.log('leg = ', leg);
-    console.log('arr = ', arr);
-
+    response.status(200).send({ steps: arrSteps, leg: leg });
   });
 
 
-}
+};
