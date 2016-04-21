@@ -22,6 +22,7 @@ const stateNames = [
   {value: 'CA', stateName: 'California'},
   {value: 'CO', stateName: 'Colorado'},
   {value: 'CT', stateName: 'Connecticut'},
+  {value: 'DC', stateName: 'District of Columbia'},
   {value: 'DE', stateName: 'Delaware'},
   {value: 'FL', stateName: 'Florida'},
   {value: 'GA', stateName: 'Georgia'},
