@@ -44,6 +44,7 @@ class hurryup extends Component {
   }
   
   render() {
+    console.log('events in index.ios.js render: ', this.state.events);
     return (
       <View style={styles.parent}>
         <Image
