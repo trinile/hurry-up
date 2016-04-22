@@ -150,7 +150,7 @@ export const getDirections = (event, position, context) => {
     console.log('inside success actualResponse api/directions');
     //if (actualResponse.success) {
     console.log('resp of directions ', actualResponse);
-    context.setState( {directions: actualResponse, toggleDirections: true });
+    context.setState( {directions: actualResponse} );
     //}
   })
   .catch((error) => console.warn('Error creating user', error));
