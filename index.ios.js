@@ -1,4 +1,3 @@
-
 import React, {
   Text,
   View,
@@ -7,9 +6,9 @@ import React, {
   Dimensions,
   StyleSheet,
   AppRegistry,
-  TouchableHighlight,
 } from 'react-native';
 
+import Main from './client/views/Main';
 import Login from './client/views/signin';
 import AllEvents from './client/views/all-events';
 import CreateEvent from './client/views/create-event';
@@ -29,7 +28,7 @@ class hurryup extends Component {
       events: [],
     };
   }
-
+  
   handleSignIn(userId) {
     this.setState({
       loggedIn: true,
@@ -37,42 +36,24 @@ class hurryup extends Component {
     }, this.getEvents.bind(this));
     this.render();
   }
-
+  
   getEvents() {
     var that = this;
     getAllEvents(that);
   }
-
+  
   render() {
     return (
       <View style={styles.parent}>
         <Image
           style={styles.bg}
           source={require('./client/background.png')}/>
-        <Text style={styles.welcome}>
+        <Text style={styles.welcome}> 
           hurryup
         </Text>
         {this.state.loggedIn
-          ? (<ScrollableTabView
-              page={1}
-              style={{marginTop: 0, top: 0}}
-              tabBarUnderlineColor="#F5F5F6"
-              tabBarActiveTextColor="#F5F5F6"
-              tabBarInactiveTextColor="#ACB2BE"
-              tabBarBackgroundColor="transparent"
-              tabBarTextStyle={{fontFamily: 'HelveticaNeue-Light', fontSize: 15}}>
-              <CreateEvent userId = {this.state.userId} tabLabel='Create Event' events = {this.state.events} getEvents = {this.getEvents.bind(this)}/>
-              <AllEvents userId = {this.state.userId} tabLabel='My Events' events = {this.state.events} getEvents = {this.getEvents.bind(this)} />
-            </ScrollableTabView>)
-          : (<ScrollableTabView
-              style={{marginTop: 0, top: 0}}
-              tabBarUnderlineColor="#F5F5F6"
-              tabBarActiveTextColor="#F5F5F6"
-              tabBarInactiveTextColor="#ACB2BE"
-              tabBarBackgroundColor="transparent"
-              tabBarTextStyle={{fontFamily: 'HelveticaNeue-Light', fontSize: 15}}>
-              <Login loggedIn = {this.state.loggedIn} handlePress = {this.handleSignIn.bind(this)} tabLabel=''/>
-            </ScrollableTabView>)
+          ? (<Main loggedIn={this.state.loggedIn} userId={this.state.userId} events={this.state.events} getevents={this.getEvents.bind(this)} />)
+          : (<Login loggedIn={this.state.loggedIn} handlePress ={this.handleSignIn.bind(this)} tabLabel=''/>)
         }
       </View>
     );
