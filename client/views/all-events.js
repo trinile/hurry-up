@@ -44,7 +44,7 @@ class AllEvents extends Component {
       <View style={{flex: 1}}>
         <ScrollView>
         {this.props.events.map((event, index) => 
-          <Event key = {index} event={event}/>
+          <Event key = {index} event={event} buttonClicked = {this.buttonClicked.bind(this)}/>
         )}
           <Text style={styles.welcome}>no more events</Text>
         </ScrollView>

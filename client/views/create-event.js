@@ -179,8 +179,6 @@ class CreateEvent extends Component {
       //This method returns a watch ID value then can be used to unregister 
       //the handler by passing it to the Geolocation.clearWatch() method.
       this.watchID = navigator.geolocation.watchPosition((position) => {
-        console.log('im a called?');
-        debugger;
         var lastPosition = position;
         this.setState({ lastPosition });
         var initialPosition   = this.state.initialPosition;
@@ -248,8 +246,8 @@ class CreateEvent extends Component {
               onChangeText={(eventName) => this.setState({eventName})}/>
           </View>
 
-           <View style={styles.rowcontainer}>
-             <View style={styles.rowaddressContainer}>
+          <View style={styles.rowcontainer}>
+            <View style={styles.rowaddressContainer}>
               <TextInput style={styles.textInput}
                 placeholder=" Event Address"
                 placeholderTextColor="#F5F5F6"
@@ -257,7 +255,7 @@ class CreateEvent extends Component {
                 style={[styles.inputFormat, styles.inputStyle]}
                 onChangeText={(address) => this.setState({address})}/>
             </View>
-             <View style={styles.rowcityContainer}>
+            <View style={styles.rowcityContainer}>
               <TextInput style={styles.textInput}
                 placeholder="City"
                 placeholderTextColor="#F5F5F6"
@@ -265,8 +263,6 @@ class CreateEvent extends Component {
                 style={[styles.inputFormat, styles.inputStyle]}
                 onChangeText={(city) => this.setState({city})}/>
             </View>
-
-
           </View>
 
             <View style={styles.inputContainer}>
