@@ -18,7 +18,6 @@ import {getAllEvents} from './client/helpers/request-helpers';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
-const Button = require('./client/views/Button');
 
 class hurryup extends Component {
   constructor(props) {

@@ -13,7 +13,6 @@ import {getAllEvents} from '../helpers/request-helpers';
 import {getDirections} from '../helpers/request-helpers';
 import navHelper from '../helpers/Navigation';
 import Drawer from 'react-native-drawer';
-import ControlPanel from './ControlPanel';
 import Menu from './Menu';
 import AllEvents from './all-events';
 
