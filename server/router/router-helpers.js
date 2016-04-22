@@ -105,12 +105,10 @@ exports.getAllUserEvents = function(req, res) {
 exports.removeUserEvent = function(req, res) {
   var eventId = req.params.id;
   
-  console.log('in removeUserEvent and eventId is: ', eventId);
   Event.where({ id: eventId })
-    // .fetchAll({})
     .destroy({})
     .then(function(event) {
-      console.log('Found 1 user event in removeUserEvent');
+      // console.log('Found 1 user event in removeUserEvent');
       res.send();
     })
     .catch(function(err) {
