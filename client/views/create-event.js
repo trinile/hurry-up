@@ -14,6 +14,8 @@ import React, {
   SegmentedControlIOS,
 } from 'react-native';
 
+import Menu from './Menu';
+
 /* Temporary fix for DatePicker type warnings.
  * Refer to: https://github.com/facebook/react-native/issues/4547 */
 console.ignoredYellowBox = [
@@ -102,7 +104,7 @@ class CreateEvent extends Component {
     this.watchID = null;
 
     this.state = {
-      userId: props.userId,
+      userId: props.route.params.userId,
       eventName: '',
       eventTime: '',
       address: '',
@@ -167,7 +169,8 @@ class CreateEvent extends Component {
         userId: this.state.userId,
       };
       //call sendEvent
-      sendEvent(newEvent, this.props.getEvents);
+      sendEvent(newEvent, this.props.route.params.getEvents);
+      this.props.route.params.callback('All Events');
       this.clearForm();
 
       var origin = this.state.initialPosition.coords;
