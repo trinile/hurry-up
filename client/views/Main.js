@@ -35,7 +35,6 @@ class Main extends Component {
   }
 
   render() {
-    console.log('state in main: ', this.state);
     return (
       <Drawer
         ref={(ref) => this._drawer = ref}

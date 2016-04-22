@@ -6,27 +6,34 @@ import React, {
   ScrollView,
   StyleSheet,
   TouchableHighlight,
+  Image
 } from 'react-native';
 
 // import {getAllEvents} from '../helpers/request-helpers';
 import {getDirections} from '../helpers/request-helpers';
+import {getAllEvents} from '../helpers/request-helpers';
 import Directions from './directions-event';
 import Event from './event-row';
 var Icon = require('react-native-vector-icons/Ionicons');
 
 var Icon = require('react-native-vector-icons/Ionicons');
+
 const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
 
 class AllEvents extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      userId: this.props.userId
+    }
   }
 
-  // componentDidMount() {
-  //   var that = this;
-  //   getAllEvents(that);
-  // }
+  componentDidMount() {
+    var that = this;
+    getAllEvents(that);
+  }
 
   buttonClicked() {
     //look into using websockets instead of refresh button / or state control
@@ -69,6 +76,9 @@ class AllEvents extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
+       <Image
+          style={styles.bg}
+          source={require('../background.png')}/>
         <ScrollView>
         {this.props.events.map((event, index) => 
           <Event key = {index} event={event}/>
@@ -87,6 +97,13 @@ class AllEvents extends Component {
   }
 };
 const styles = StyleSheet.create({
+  bg: {
+    top: 0,
+    left: 0,
+    width: deviceWidth,
+    position: 'absolute',
+    height: deviceHeight,
+  },
   EventContainer: {
     flex: 1,
     margin: 7,
