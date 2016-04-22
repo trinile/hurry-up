@@ -101,6 +101,23 @@ exports.getAllUserEvents = function(req, res) {
     });
 };
 
+exports.removeUserEvent = function(req, res) {
+  var eventId = req.params.id;
+  
+  console.log('in removeUserEvent and eventId is: ', eventId);
+  Event.where({ id: eventId })
+    // .fetchAll({})
+    .destroy({})
+    .then(function(event) {
+      console.log('Found 1 user event in removeUserEvent');
+      res.send();
+    })
+    .catch(function(err) {
+      console.error('Could not find user event in removeUserEvent', err);
+      res.status(404).send(err);
+    });
+};
+
 exports.login = function(req, res) {
   var username = req.body.username;
   var password = req.body.password;

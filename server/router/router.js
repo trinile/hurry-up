@@ -17,6 +17,8 @@ app.post('/api/events', route.addEvent);
 
 app.get('/api/events/:id', route.getAllUserEvents);
 
+app.delete('/api/events/:id', route.removeUserEvent);
+
 app.post('/api/directions', route.getEventDirections);
 
 app.put('/api/users/:id', route.updateUserLocation);
