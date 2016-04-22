@@ -97,6 +97,8 @@ class CreateEvent extends Component {
   constructor(props) {
     super(props);
 
+    console.log('CreateEvent props: ', props);
+
     this.watchID = null;
 
     this.state = {
