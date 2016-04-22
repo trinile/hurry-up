@@ -11,12 +11,8 @@ import React, {
 // import {getAllEvents} from '../helpers/request-helpers';
 import {getDirections} from '../helpers/request-helpers';
 import Directions from './directions-event';
-<<<<<<< HEAD
 import Event from './event-row';
 var Icon = require('react-native-vector-icons/Ionicons');
-=======
-
->>>>>>> Progress on hamburger menu
 
 var Icon = require('react-native-vector-icons/Ionicons');
 const deviceWidth = Dimensions.get('window').width;
