@@ -34,14 +34,13 @@ class Main extends Component {
     this._drawer.close();
   }
   
-  componentWillReceiveProps(nextProps) {
-    console.log('Main componentWillReceiveProps: ', nextProps);
+  // componentWillReceiveProps(nextProps) {
+  //   console.log('Main componentWillReceiveProps: ', nextProps);
     // this._navigator.replace(navHelper(route, this.props.events, this.props.getEvents, this.props.userId));
     // this.props.events = nextProps.events;
     // this.render();
-  }
+  // }
   
- 
   render() {
     console.log('props.events in Main render: ', this.props.events);
     return (
