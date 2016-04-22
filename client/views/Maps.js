@@ -41,19 +41,17 @@ class Directions extends Component {
 
   render() {
     
-     return (
+    return (
       <View style={styles.DirectionsContainer} >
       <MapView
-        style={styles.map}
-        region={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421}}
-        showsUserLocation={true}
-        followUserLocation={true}
-      />
-        {
+                style={styles.map}
+                onRegionChange={this._onRegionChange}
+                onRegionChangeComplete={this._onRegionChangeComplete}
+                region={this.state.mapRegion}
+                showUserLocation={true}
+                followUserLocation={true}
+                annotations={this.state.annotations}
+              />
           <View style={styles.directions}>
             <Text>Starting Address: {this.props.directions.leg.startAddress}</Text> 
             <Text>Ending Address: {this.props.directions.leg.endAddress}</Text> 
@@ -75,7 +73,7 @@ const styles = StyleSheet.create({
     padding: 10
   },
   map: {
-    height: 200,
+    height: 150,
     margin: 10,
     borderWidth: 1,
     borderColor: '#000000',
