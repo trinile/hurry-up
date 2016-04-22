@@ -5,7 +5,8 @@ import React, {
   Dimensions,
   ScrollView,
   StyleSheet,
-  TouchableHighlight
+  TouchableHighlight,
+  
 } from 'react-native';
 
 import {getAllEvents} from '../helpers/request-helpers';
@@ -15,6 +16,7 @@ import Directions from './directions-event';
 import AllEvents from './all-events';
 
 var Icon = require('react-native-vector-icons/Ionicons');
+var Accordion = require('react-native-accordion');
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -67,6 +69,25 @@ class Event extends Component {
   }
 
   render() {
+
+    var header = (
+      <View>
+
+       <Text style={styles.accordianHeader}>
+        <Icon name='android-walk' size={25}></Icon>
+        <Text style='paddingLeft: 25'>  Directions</Text>
+       </Text>
+        
+      </View>
+    );
+ 
+    var content = (   
+        <View>
+          <Directions directions = {this.state.directions} display={this.state.toggleDirections}/>
+          <Text></Text>
+        </View>
+    );
+
     return (
       <View style={styles.EventContainer}>
         <View style={styles.EventRow}>
@@ -91,13 +112,13 @@ class Event extends Component {
           <Icon.Button name="android-cancel" backgroundColor="#cc0000" onPress={this.removeEvent.bind(this, this.props.event)}>
             <Text style={styles.buttonText}>Delete</Text>
           </Icon.Button>  
-        </View>   
-        <View style={styles.EventRow}>
-          <Icon.Button name="android-walk" backgroundColor="#3b5998" onPress={this.getDirections.bind(this, this.props.event)}>
-            <Text style={styles.buttonText}>Directions</Text>
-          </Icon.Button>  
-        </View>
-        <Directions directions = {this.state.directions} display={this.state.toggleDirections}/>
+        </View>       
+        <Accordion
+          header={header}
+          content={content}
+          easing="easeOutCubic"
+          onPress={this.getDirections.bind(this, this.props.event)}
+        />
       </View>
     );
   }
@@ -108,7 +129,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 7,
     padding: 15,
-    height: 250,
     borderWidth: 1,
     borderColor: 'transparent',
     borderBottomColor: '#F5F5F6',
@@ -155,6 +175,14 @@ const styles = StyleSheet.create({
 
   iconButton: {
     padding: 15,
+    width: deviceWidth,
+    alignItems: 'center',
+    backgroundColor: '#34778A',
+  },
+
+  accordianHeader: {
+    padding: 10,
+    fontSize: 16,
     width: deviceWidth,
     alignItems: 'center',
     backgroundColor: '#34778A',
