@@ -26,25 +26,34 @@ class Event extends Component {
     super(props);
     console.log('event prop', this.props.event.eventName);
     this.state = {
-      directions: 'unknown',
-      toggleDirections: false
+      directions: {
+        steps: [
+           {
+              instructions: '',
+              duration: ''
+           }
+        ],
+        leg: {
+          endAddress: '',
+          startAddress: '',
+          durationText: '',
+          distanceText: ''
+        }
+      } 
     };
   }
   
-  getDirections(event) {
+  getEventDirections(event) {
     var that = this;
-    if (this.state.toggleDirections) {
-      this.setState({
-        toggleDirections: false
-      });
-    } else {
-      navigator.geolocation.getCurrentPosition((position) => {
-        // getDirections
-        getDirections(event, position, that);
-      },
-      (error) => console.log(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});   
-    }
+  
+    // get current position first
+    navigator.geolocation.getCurrentPosition((position) => {
+      //on success, call getDirections from request-helpers
+      getDirections(event, position, that);
+    },
+    (error) => console.log(error.message),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});   
+    
 
   }
 
@@ -83,7 +92,7 @@ class Event extends Component {
  
     var content = (   
         <View>
-          <Directions directions = {this.state.directions} display={this.state.toggleDirections}/>
+          <Directions directions = {this.state.directions} />
           <Text></Text>
         </View>
     );
@@ -113,12 +122,13 @@ class Event extends Component {
             <Text style={styles.buttonText}>Delete</Text>
           </Icon.Button>  
         </View>       
-        <Accordion
-          header={header}
-          content={content}
-          easing="easeOutCubic"
-          onPress={this.getDirections.bind(this, this.props.event)}
-        />
+         <Accordion
+            header={header}
+            content={content}
+            easing="easeOutCubic"
+            onPress={this.getEventDirections.bind(this, this.props.event)}
+            style={styles.accordian}
+          />
       </View>
     );
   }
@@ -127,15 +137,13 @@ class Event extends Component {
 const styles = StyleSheet.create({
   EventContainer: {
     flex: 1,
-    margin: 7,
-    padding: 15,
-    borderWidth: 1,
-    borderColor: 'transparent',
     borderBottomColor: '#F5F5F6',
+    borderBottomWidth: 1
   },
   EventRow: {
     flex: 1,
     flexDirection:'row',
+    padding: 5
   },
   EventTitle: {
     margin: 5,
@@ -179,6 +187,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#34778A',
   },
+
+  accordian: {
+    flex: 1,
+    padding: 0
+  }, 
 
   accordianHeader: {
     padding: 10,
