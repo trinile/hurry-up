@@ -21,6 +21,28 @@ export const sendEvent = (newEvent, cb) => {
   .catch((error) => console.warn('Unable to send event', error));
 };
 
+export const deleteEvent = (eventId, cb) => {
+  console.log('*******attempting to delete in request-helpers*********')
+  fetch('http://localhost:8080/api/events/' + eventId, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    // body: JSON.stringify({id: eventId}),
+  })
+  .then((response) => {
+    console.log('Event DELETE response: ', response);
+    if (cb) {
+      console.log('do callback branch in deleteEvent');
+      cb();
+    } else {
+      console.log('callback not defined in deleteEvent');
+    }
+  })
+  .catch((error) => console.warn('Unable to delete event', error));
+};
+
 export const createUser = (newUser, context) => {
   fetch('http://localhost:8080/api/signup', {
     method: 'POST',

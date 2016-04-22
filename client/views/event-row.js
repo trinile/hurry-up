@@ -9,7 +9,7 @@ import React, {
 } from 'react-native';
 
 import {getAllEvents} from '../helpers/request-helpers';
-import {getDirections} from '../helpers/request-helpers';
+import {getDirections, deleteEvent} from '../helpers/request-helpers';
 
 import Directions from './directions-event';
 import AllEvents from './all-events';
@@ -46,6 +46,12 @@ class Event extends Component {
 
   }
 
+  removeEvent(event) {
+    console.log('*******************in removeEvent*****************');
+    console.log(event.id);
+    deleteEvent(event.id);
+  }
+
   displayTime(time) {
     var dateTime = time.toString();
     var hours = dateTime.substring(16,18);
@@ -80,7 +86,12 @@ class Event extends Component {
           <View style={styles.EventInput}>
             <Text style={styles.EventText}>{this.props.event.mode}</Text>
           </View>
-        </View>      
+        </View>   
+        <View style={styles.EventRow}>
+          <Icon.Button name="android-cancel" backgroundColor="#cc0000" onPress={this.removeEvent.bind(this, this.props.event)}>
+            <Text style={styles.buttonText}>Delete</Text>
+          </Icon.Button>  
+        </View>   
         <View style={styles.EventRow}>
           <Icon.Button name="android-walk" backgroundColor="#3b5998" onPress={this.getDirections.bind(this, this.props.event)}>
             <Text style={styles.buttonText}>Directions</Text>
