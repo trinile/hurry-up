@@ -39,6 +39,11 @@ class hurryup extends Component {
     this.render();
   }
   
+  getEvents() {
+    var that = this;
+    getAllEvents(that);
+  }
+  
   render() {
     return (
       <View style={styles.parent}>
@@ -49,7 +54,7 @@ class hurryup extends Component {
           hurryup
         </Text>
         {this.state.loggedIn
-          ? (<Main loggedIn={this.state.loggedIn} userId={this.state.userId} />)
+          ? (<Main loggedIn={this.state.loggedIn} userId={this.state.userId} events={this.state.events} getevents={this.getEvents.bind(this)} />)
           : (<Login loggedIn={this.state.loggedIn} handlePress ={this.handleSignIn.bind(this)} tabLabel=''/>)
         }
       </View>

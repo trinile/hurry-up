@@ -21,10 +21,6 @@ class AllEvents extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      userId: props.userId
-    };
   }
 
   // componentDidMount() {

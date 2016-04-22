@@ -3,19 +3,25 @@ import React, {
 } from 'react-native';
 
 import CreateEvent from '../views/create-event';
-import AllEvents from '../views/all-events';
+import Profile from '../views/Profile';
+import Signout from '../views/Signout';
 
 module.exports = function (scene) {
   var componentMap = {
-    'My Events': {
-      title: 'My Events',
-      name: 'My Events',
-      component: AllEvents
-    },
     'Create Event': {
       title: 'Create Event',
       name: 'Create Event',
       component: CreateEvent
+    },
+    'Profile': {
+      title: 'Profile',
+      name: 'Profile',
+      component: Profile
+    },
+    'Sign Out': {
+      title: 'Sign Out',
+      name: 'Sign Out',
+      component: Signout
     }
   }
   var component = componentMap[scene];
