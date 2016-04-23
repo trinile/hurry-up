@@ -1,4 +1,4 @@
-# hurry-up 2.0
+# hurryup 2.0
 
 The goal of hurry-up is to make sure you are never late to an appointment again. hurry-up allows users to save an appointment and receive a text message reminder when they should leave, based on wherever their location happens to be at that time.
 
