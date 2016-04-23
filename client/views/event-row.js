@@ -28,10 +28,10 @@ class Event extends Component {
     this.state = {
       directions: {
         steps: [
-          {
-            instructions: '',
-            duration: ''
-          }
+           {
+              instructions: '',
+              duration: ''
+           }
         ],
         leg: {
           endAddress: '',
@@ -203,4 +203,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Event; 
+export default Event;

@@ -26,7 +26,7 @@ class AllEvents extends Component {
 
     this.state = {
       userId: this.props.userId,
-      events: this.props.events
+      events: this.state.events
     }
   }
 
@@ -72,19 +72,18 @@ class AllEvents extends Component {
   }
 
   render() {
-
-    // { console.log('inside all-event render, props = ', this.props)}
-    var renderEvents = this.state.events;
-    if (this.props && this.props.route && this.props.route.params && this.props.route.params.events) {
-      renderEvents = this.props.route.params.events;
+    var events = this.props.events;
+    if (this.props.route.params.events) {
+      events = this.props.route.params.events;
     }
+    { console.log('inside all-event render, props = ', this.props)}
     return (
       <View style={{flex: 1}}>
        <Image
           style={styles.bg}
           source={require('../background.png')}/>
         <ScrollView>
-          {renderEvents.map((event, index) => 
+          {events.map((event, index) => 
             <Event key = {index} event={event}/>
           )}
           <Text style={styles.welcome}>No more events</Text>
