@@ -243,7 +243,6 @@ class CreateEvent extends Component {
       //This method returns a watch ID value then can be used to unregister 
       //the handler by passing it to the Geolocation.clearWatch() method.
       this.watchID = navigator.geolocation.watchPosition((position) => {
-        console.log('im a called?');
         var lastPosition = position;
         this.setState({ lastPosition });
         var initialPosition   = this.state.initialPosition;

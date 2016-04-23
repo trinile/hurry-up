@@ -16,9 +16,16 @@ import Directions from './directions-event';
 import AllEvents from './all-events';
 
 var Icon = require('react-native-vector-icons/Ionicons');
-var Accordion = require('react-native-accordion');
+var Accordion = require('react-native-collapsible/Accordion');
 
 const deviceWidth = Dimensions.get('window').width;
+
+var SECTIONS = [
+  {
+    title: 'Directions',
+    content: 'Hola',
+  }
+];
 
 class Event extends Component {
 
@@ -46,18 +53,42 @@ class Event extends Component {
     };
   }
   
-getEventDirections(event) {
-    var that = this;
+  // getEventDirections(event) {
+  //   var that = this;
   
-    // get current position first
-    navigator.geolocation.getCurrentPosition((position) => {
-      //on success, call getDirections from request-helpers
-      getDirections(event, position, that);
-    },
-    (error) => console.log(error.message),
-    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});   
+  //   // get current position first
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     //on success, call getDirections from request-helpers
+  //     getDirections(event, position, that);
+  //   },
+  //   (error) => console.log(error.message),
+  //   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});   
     
 
+  // }
+
+  _renderHeader(section) {
+
+    var textPadding = {
+      paddingLeft: 25
+    };
+
+    return (
+      <View>
+       <Text style={styles.accordianHeader}>
+        <Icon name='android-walk' size={25}></Icon>
+        <Text style={textPadding}>  Directions</Text>
+       </Text>
+      </View>
+    );
+  }
+
+  _renderContent(section) {
+    return (
+      <View>
+        <Directions event={this.props.event} />
+      </View>
+    );
   }
 
   removeEvent(event) {
@@ -65,7 +96,6 @@ getEventDirections(event) {
   }
 
   editEvent(event) {
-    // console.log('edit event', event.id);
     this.props.editClicked(event.id);
   }
 
@@ -86,25 +116,6 @@ getEventDirections(event) {
   }
 
   render() {
-
-    var header = (
-      <View>
-
-       <Text style={styles.accordianHeader}>
-        <Icon name='android-walk' size={25}></Icon>
-        <Text style={styles.padLeft}>  Directions</Text>
-
-       </Text>
-        
-      </View>
-    );
- 
-    var content = (   
-        <View>
-          <Directions directions = {this.state.directions} />
-          <Text></Text>
-        </View>
-    );
 
     return (
       <View style={styles.EventContainer}>
@@ -134,18 +145,16 @@ getEventDirections(event) {
             <Text style={styles.EventText}>{this.props.event.mode}</Text>
           </View>
         </View>       
-         <Accordion
-            header={header}
-            content={content}
-            easing="easeOutCubic"
-            onPress={this.getEventDirections.bind(this, this.props.event)}
-            style={styles.accordian}
-          />
+        <Accordion
+          sections={SECTIONS}
+          renderHeader={this._renderHeader.bind(this)}
+          renderContent={this._renderContent.bind(this)}
+         
+        />
       </View>
     );
   }
 };
-
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -159,10 +168,6 @@ const styles = StyleSheet.create({
   },
   EventContainer: {
     flex: 1,
-    margin: 7,
-    marginTop: 0,
-    padding: 15,
-    borderWidth: 1,
     borderColor: 'transparent',
     borderBottomColor: '#F5F5F6',
     borderBottomWidth: 1
