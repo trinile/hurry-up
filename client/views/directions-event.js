@@ -10,6 +10,8 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
+import {getDirections} from '../helpers/request-helpers';
+
 const windowSize = Dimensions.get('window');
 
 /*
@@ -37,29 +39,76 @@ const windowSize = Dimensions.get('window');
 class Directions extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       animating: true,
+      directions: {
+        steps: [
+           {
+              instructions: '',
+              duration: ''
+           }
+        ],
+        leg: {
+          endAddress: '',
+          startAddress: '',
+          durationText: '',
+          distanceText: ''
+        },
+        overviewPolyLines: [],
+        region: {},
+        markers: {}
+      }
     }
   }
 
   componentDidMount() {
+
     var that = this;
+  
+    // get current position first
+    navigator.geolocation.getCurrentPosition((position) => {
+      //on success, call getDirections from request-helpers
+      getDirections(this.props.event, position, that);
+    },
+    (error) => console.log(error.message),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});   
 
   }
-  // mixins: [TimerMixin]
+
+  getEventDirections(event) {
+
+    var that = this;
+  
+    // get current position first
+    navigator.geolocation.getCurrentPosition((position) => {
+      //on success, call getDirections from request-helpers
+      getDirections(event, position, that);
+    },
+    (error) => console.log(error.message),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});   
+    
+  }
 
   render() {
-    console.log('steps ', this.props.directions.steps);
+    console.log('steps ', this.state.directions.steps);
+
+     var len = this.state.directions.steps.length;
+    
+     //var height = 500 + (len*30);
+     var containerHeight = {
+       height: 500 + (len*30)
+     };
 
      return (
-      <View style={styles.DirectionsContainer}>
+      <View style={{containerHeight, flex: 1}}>
       <MapView
         style={styles.map}
-        region={ this.props.directions.region}
-        annotations={this.props.directions.markers.markers}
+        region={ this.state.directions.region}
+        annotations={this.state.directions.markers.markers}
         showsUserLocation={true}
         overlays={[{
-          coordinates: this.props.directions.overviewPolyLine,
+          coordinates: this.state.directions.overviewPolyLine,
           strokeColor: '#f007',
           lineWidth: 3,
         }]}
@@ -70,7 +119,7 @@ class Directions extends Component {
             /*<View style={styles.EventRow}>
             <Text style={styles.EventTitle}>Current Location: </Text>
             <View style={styles.EventInput}>
-              <Text style={styles.EventText}>{this.props.directions.leg.startAddress}</Text>
+              <Text style={styles.EventText}>{this.state.directions.leg.startAddress}</Text>
             </View>
           </View>
           */
@@ -78,21 +127,21 @@ class Directions extends Component {
             <View style={styles.EventRow}>
               <Text style={styles.EventTitle}>Total Time:  </Text>
               <View style={styles.EventInput}>
-                <Text style={styles.EventText}>{this.props.directions.leg.durationText}</Text>
+                <Text style={styles.EventText}>{this.state.directions.leg.durationText}</Text>
               </View>
             </View>
 
             <View style={styles.EventRow}>
               <Text style={styles.EventTitle}>Total Distance: </Text>
               <View style={styles.EventInput}>
-                <Text style={styles.EventText}>{this.props.directions.leg.distanceText}</Text>
+                <Text style={styles.EventText}>{this.state.directions.leg.distanceText}</Text>
               </View>
             </View>
 
             <View style={styles.EventRow}>
               <Text style={styles.EventTitle}>Directions: </Text>
               </View>
-            {this.props.directions.steps.map((step, index) => 
+            {this.state.directions.steps.map((step, index) => 
               <View style={styles.EventInput} key={index} >
                 <Text style={styles.EventText}> {step.instructions} </Text>
               </View>
@@ -108,6 +157,7 @@ class Directions extends Component {
 const styles = StyleSheet.create({
   DirectionsContainer: {
     flex: 1,
+    height: 500
     
   },
   directions: {
