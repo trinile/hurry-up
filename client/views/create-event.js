@@ -1,6 +1,7 @@
 //gets current position of phone/user with navigator.geolocation.getCurrentPosition()
 
 import React, {
+  ScrollView,
   Text,
   View,
   Image,
@@ -302,124 +303,126 @@ class CreateEvent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.inputsContainer}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Event Name"
-              value={this.state.eventName}
-              placeholderTextColor="#F5F5F6"
-              style={[styles.inputFormat, styles.inputStyle]}
-              onChangeText={(eventName) => this.setState({eventName})}/>
-          </View>
-
-          <View style={styles.rowcontainer}>
-            <View style={styles.rowaddressContainer}>
-              <TextInput style={styles.textInput}
-                placeholder=" Event Address"
-                placeholderTextColor="#F5F5F6"
-                value={this.state.address}
-                style={[styles.inputFormat, styles.inputStyle]}
-                onChangeText={(address) => this.setState({address})}/>
-            </View>
-            <View style={styles.rowcityContainer}>
-              <TextInput style={styles.textInput}
-                placeholder="City"
-                placeholderTextColor="#F5F5F6"
-                value={this.state.city}
-                style={[styles.inputFormat, styles.inputStyle]}
-                onChangeText={(city) => this.setState({city})}/>
-            </View>
-          </View>
-
+        <ScrollView>
+          <View style={styles.inputsContainer}>
             <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="Event Name"
+                value={this.state.eventName}
+                placeholderTextColor="#F5F5F6"
+                style={[styles.inputFormat, styles.inputStyle]}
+                onChangeText={(eventName) => this.setState({eventName})}/>
+            </View>
+
+            <View style={styles.rowcontainer}>
+              <View style={styles.rowaddressContainer}>
+                <TextInput style={styles.textInput}
+                  placeholder=" Event Address"
+                  placeholderTextColor="#F5F5F6"
+                  value={this.state.address}
+                  style={[styles.inputFormat, styles.inputStyle]}
+                  onChangeText={(address) => this.setState({address})}/>
+              </View>
+              <View style={styles.rowcityContainer}>
+                <TextInput style={styles.textInput}
+                  placeholder="City"
+                  placeholderTextColor="#F5F5F6"
+                  value={this.state.city}
+                  style={[styles.inputFormat, styles.inputStyle]}
+                  onChangeText={(city) => this.setState({city})}/>
+              </View>
+            </View>
+
+              <View style={styles.inputContainer}>
+                <TouchableHighlight
+                  style={styles.inputFormat}
+                  underlayColor="transparent"
+                  onPress={() => { this.state.stateModal ? this.setState({ stateModal: false }) : this.setState({ stateModal: true })}}>
+                  <Text style={styles.inputStyle}>
+                    {stateNames[this.state.stateNameIndex].stateName}
+                  </Text>
+                </TouchableHighlight>
+                  { this.state.stateModal
+                    ? <StatePicker
+                      offSet={this.state.offSet}
+                      stateNameIndex={this.state.stateNameIndex}
+                      closeModal={console.log(':( consistent modal-ing')}
+                      changeStateAbbreviation={this.changeStateAbbreviation.bind(this)}/>
+                    : null
+                  }
+              </View>
+
+
+            <View style={this.state.stateModal ? [{ transform: [{translateY: deviceHeight*.7}] }] : styles.inputContainer}>
               <TouchableHighlight
                 style={styles.inputFormat}
                 underlayColor="transparent"
-                onPress={() => { this.state.stateModal ? this.setState({ stateModal: false }) : this.setState({ stateModal: true })}}>
+                onPress={() => { this.state.dateModal ? this.setState({ dateModal: false }) : this.setState({ dateModal: true })}}>
                 <Text style={styles.inputStyle}>
-                  {stateNames[this.state.stateNameIndex].stateName}
+                  Event Time -- {this.displayTime()}
                 </Text>
               </TouchableHighlight>
-                { this.state.stateModal
-                  ? <StatePicker
-                    offSet={this.state.offSet}
-                    stateNameIndex={this.state.stateNameIndex}
-                    closeModal={console.log(':( consistent modal-ing')}
-                    changeStateAbbreviation={this.changeStateAbbreviation.bind(this)}/>
+                { this.state.dateModal
+                  ? <DatePicker
+                    dateOffset={this.state.dateOffset}
+                    closeModal={console.log('ERR: closeModal not working')}
+                    onDateChange={this.onDateChange.bind(this)}
+                    date={this.state.date}
+                    mode="datetime"
+                    minuteInterval={null}
+                    timeZoneOffsetInHours={this.state.timeZoneOffsetInHours}/>
                   : null
                 }
             </View>
 
+            <View style={this.state.dateModal || this.state.stateModal ? [{ transform: [{translateY: deviceHeight*.7}] }] : styles.inputContainer}>
+              <TouchableHighlight
+                style={styles.inputFormat}
+                underlayColor="transparent"
+                onPress={() => { this.state.modal ? this.setState({ modal: false }) : this.setState({ modal: true })}}>
+                <Text style={styles.inputStyle}>
+                  Early Arrival -- {earlyArrivalTimes[this.state.earlyArrivalIndex].time}
+                </Text>
+              </TouchableHighlight>
+                { this.state.modal
+                  ? <Picker
+                    offSet={this.state.offSet}
+                    earlyArrivalIndex={this.state.earlyArrivalIndex}
+                    closeModal={console.log(':( consistent modal-ing')}
+                    changeEarlyArrival={this.changeEarlyArrival.bind(this)}/>
+                  : null
+                }
+            </View>
 
-          <View style={this.state.stateModal ? [{ transform: [{translateY: deviceHeight*.7}] }] : styles.inputContainer}>
-            <TouchableHighlight
-              style={styles.inputFormat}
-              underlayColor="transparent"
-              onPress={() => { this.state.dateModal ? this.setState({ dateModal: false }) : this.setState({ dateModal: true })}}>
+            <View style={(this.state.modal || this.state.dateModal || this.state.stateModal) ? styles.hidden : styles.segmentedContainer}>
+              <TextInput
+                placeholderTextColor="#F5F5F6"
+                placeholder="Mode of Transport"
+                style={[styles.inputFormat, styles.inputStyle]}/>
+              <View style={styles.segmentedSpacing}></View>
+              <SegmentedControlIOS
+                tintColor="#CCC"
+                style={styles.segmented}
+                values={this.state.values}
+                onChange={this.onChange.bind(this)}
+                onValueChange={this.onValueChange.bind(this)} 
+                selectedIndex={this.state.travelIndex} />
+            </View>
+
+          </View>
+
+          <TouchableHighlight
+            onPress={this.buttonClicked.bind(this)}
+            pointerEvents={(this.state.modal || this.state.dateModal) ? 'none' : 'auto'}
+            style={(this.state.modal || this.state.dateModal || this.state.stateModal) ? styles.hidden : styles.submitButton}>
+            <View>
               <Text style={styles.inputStyle}>
-                Event Time -- {this.displayTime()}
+                Submit!
               </Text>
-            </TouchableHighlight>
-              { this.state.dateModal
-                ? <DatePicker
-                  dateOffset={this.state.dateOffset}
-                  closeModal={console.log('ERR: closeModal not working')}
-                  onDateChange={this.onDateChange.bind(this)}
-                  date={this.state.date}
-                  mode="datetime"
-                  minuteInterval={null}
-                  timeZoneOffsetInHours={this.state.timeZoneOffsetInHours}/>
-                : null
-              }
-          </View>
-
-          <View style={this.state.dateModal || this.state.stateModal ? [{ transform: [{translateY: deviceHeight*.7}] }] : styles.inputContainer}>
-            <TouchableHighlight
-              style={styles.inputFormat}
-              underlayColor="transparent"
-              onPress={() => { this.state.modal ? this.setState({ modal: false }) : this.setState({ modal: true })}}>
-              <Text style={styles.inputStyle}>
-                Early Arrival -- {earlyArrivalTimes[this.state.earlyArrivalIndex].time}
-              </Text>
-            </TouchableHighlight>
-              { this.state.modal
-                ? <Picker
-                  offSet={this.state.offSet}
-                  earlyArrivalIndex={this.state.earlyArrivalIndex}
-                  closeModal={console.log(':( consistent modal-ing')}
-                  changeEarlyArrival={this.changeEarlyArrival.bind(this)}/>
-                : null
-              }
-          </View>
-
-          <View style={(this.state.modal || this.state.dateModal || this.state.stateModal) ? styles.hidden : styles.segmentedContainer}>
-            <TextInput
-              placeholderTextColor="#F5F5F6"
-              placeholder="Mode of Transport"
-              style={[styles.inputFormat, styles.inputStyle]}/>
-            <View style={styles.segmentedSpacing}></View>
-            <SegmentedControlIOS
-              tintColor="#CCC"
-              style={styles.segmented}
-              values={this.state.values}
-              onChange={this.onChange.bind(this)}
-              onValueChange={this.onValueChange.bind(this)} 
-              selectedIndex={this.state.travelIndex} />
-          </View>
-
-        </View>
-
-        <TouchableHighlight
-          onPress={this.buttonClicked.bind(this)}
-          pointerEvents={(this.state.modal || this.state.dateModal) ? 'none' : 'auto'}
-          style={(this.state.modal || this.state.dateModal || this.state.stateModal) ? styles.hidden : styles.submitButton}>
-          <View>
-            <Text style={styles.inputStyle}>
-              Submit!
-            </Text>
-          </View>
-        </TouchableHighlight>
-        <View style={styles.empty}></View>
+            </View>
+          </TouchableHighlight>
+          <View style={styles.empty}></View>
+        </ScrollView>
       </View>
     );
   }

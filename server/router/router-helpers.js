@@ -288,7 +288,6 @@ exports.getEventDirections = function(req, response) {
 
       var latCenter = (bounds.northeast.lat + bounds.southwest.lat) / 2;
       var lngCenter = (bounds.northeast.lng + bounds.southwest.lng) / 2;
-      console.log(bounds);
 
       var region = {
         latitude: latCenter,
@@ -296,8 +295,6 @@ exports.getEventDirections = function(req, response) {
         latitudeDelta: Math.abs(latCenter - bounds.northeast.lat) * 3.5,
         longitudeDelta: Math.abs(lngCenter - bounds.northeast.lng) * 3.5
       };
-
-      console.log('region ', region);
 
       var startOrigin = {
         lat: parsedBody.routes[0].legs[0].start_location.lat,

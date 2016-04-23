@@ -78,7 +78,7 @@ class hurryup extends Component {
           style={styles.bg}
           source={require('./client/background.png')}/>
         <Text style={styles.welcome}>
-          hurryup
+          hurryup 2.0
         </Text>
         {this.state.loggedIn
           ? (<ScrollableTabView

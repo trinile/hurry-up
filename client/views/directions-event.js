@@ -92,7 +92,6 @@ class Directions extends Component {
   }
 
   render() {
-    console.log('steps ', this.state.directions.steps);
 
      var len = this.state.directions.steps.length;
     
@@ -116,15 +115,7 @@ class Directions extends Component {
       />
         {
           <View style={styles.directions}>
-            {
-            /*<View style={styles.EventRow}>
-            <Text style={styles.EventTitle}>Current Location: </Text>
-            <View style={styles.EventInput}>
-              <Text style={styles.EventText}>{this.state.directions.leg.startAddress}</Text>
-            </View>
-          </View>
-          */
-          }
+          
             <View style={styles.EventRow}>
               <Text style={styles.EventTitle}>Total Time:  </Text>
               <View style={styles.EventInput}>
