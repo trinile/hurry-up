@@ -22,7 +22,15 @@ This is a fork of the [original project] (https://github.com/LuxuriousNeckbeards
 
 ## Roadmap
 
-See our [issues] (https://github.com/mediocreokra/hurry-up/issues) for features to be added. 
+See our [issues] (https://github.com/mediocreokra/hurry-up/issues) for features to be added.
+
+## Challenges
+
+* React Native changed its `fetch()` method on the day we started working, which resulted in failing API calls on HTTP requests. We started out with debugging this issue before we could proceed, and learned a valuable lesson about not using private variables like `_bodyText`.
+* We tried re-designing the navigation to use a side menu, a.k.a. a 'drawer.' This led to various complications with passing state and props through navigation scenes that stopped the other new features from working. Eventually we pivoted and opted for the list of new features above. 
+* Learning a new mobile framework was itself a sizeable challenge.
+* State management is tricky, and now we all want to learn Redux.
+* Debugging in a React Native app is also a challenge; not all errors have associated line numbers.
 
 ## Installation
 
