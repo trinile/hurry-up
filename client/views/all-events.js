@@ -38,6 +38,7 @@ class AllEvents extends Component {
     // getAllEvents(that);
     this.props.getEvents();
 
+
   }
 
   editClicked(eventId) {
