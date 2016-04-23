@@ -129,11 +129,6 @@ getEventDirections(event) {
           <View style={styles.EventInput}>
             <Text style={styles.EventText}>{this.props.event.mode}</Text>
           </View>
-        </View>   
-        <View style={styles.EventRow}>
-          <Icon.Button name="android-cancel" backgroundColor="#cc0000" onPress={this.removeEvent.bind(this, this.props.event)}>
-            <Text style={styles.buttonText}>Delete</Text>
-          </Icon.Button>  
         </View>       
          <Accordion
             header={header}
