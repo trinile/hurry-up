@@ -1,6 +1,6 @@
 # hurryup 2.0
 
-The goal of hurryup is to make sure you are never late to an appointment again. hurryup allows users to save an appointment and receive a text message reminder when they should leave, based on wherever their location happens to be at that time.
+The goal of **hurryup** is to make sure you are never late to an appointment again. **hurryup** allows users to save an appointment and receive a text message reminder when they should leave, based on wherever their location happens to be at that time.
 
 
 This is a fork of the [original project] (https://github.com/LuxuriousNeckbeards/hurryup) by **Luxurious Neckbeards**.
@@ -12,7 +12,8 @@ This is a fork of the [original project] (https://github.com/LuxuriousNeckbeards
 4. Different text messages based on time until event; i.e. the app texts you when it is time to leave, but if you are already late when you add the event, the text tells you how late you are.
 5. Added a picker menu for selecting states in the destination.
 6. Fixed errors with 12:00 pm events.
-7. Events display on app load, rather than waiting for user to refresh. 
+7. Events display on app load, rather than waiting for user to refresh.
+8. User is directed to My Events page after creating or editing an event.
 
 ## NPM Modules We Added
 * [polyline] (https://github.com/mapbox/polyline)
