@@ -21,6 +21,25 @@ export const sendEvent = (newEvent, cb) => {
   .catch((error) => console.warn('Unable to send event', error));
 };
 
+export const updateEvent = (eventId, newEvent, cb) => {
+  fetch('http://localhost:8080/api/events/' + eventId, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newEvent),
+  })
+  .then((response) => {
+    console.log('Event PUT response: ', response);
+    if (cb) {
+      console.log('doing callback branch in updateEvent');
+      cb();
+    }
+  })
+  .catch((error) => console.warn('Unable to send event', error));
+};
+
 export const deleteEvent = (eventId, cb) => {
   fetch('http://localhost:8080/api/events/' + eventId, {
     method: 'DELETE',

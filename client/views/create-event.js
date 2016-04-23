@@ -23,7 +23,7 @@ console.ignoredYellowBox = [
 import Picker from './picker';
 import DatePicker from './datePicker';
 import StatePicker from './statePicker';
-import {sendEvent, updateLocation} from '../helpers/request-helpers';
+import {sendEvent, updateLocation, updateEvent} from '../helpers/request-helpers';
 
 const DISTANCE_TO_REFRESH = 0.004;
 const deviceWidth         = Dimensions.get('window').width;
@@ -114,6 +114,7 @@ class CreateEvent extends Component {
       stateModal: false,
       offSet: new Animated.Value(deviceHeight),
       values: ['Driving', 'Walking' , 'Bicycling', 'Transit'],
+      travelIndex: 0,
       date: new Date(),
       timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
       dateModal: false,
@@ -130,6 +131,60 @@ class CreateEvent extends Component {
     },
     (error) => alert(error.message),
     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});
+  }
+
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.eventId) {
+      console.log('eventId updated: ', nextProps.eventId);
+      var grabbedEvent = this.props.events.filter(function(eachEvent) {
+        if (eachEvent.id === nextProps.eventId) {
+          console.log('matched event');
+          return true;
+        };
+        return false;
+      })
+      if (grabbedEvent.length===1) {
+        var newTravelIndex = 0;
+        for (var i = 0; i < this.state.values.length; i++) {
+          if (this.state.values[i] === grabbedEvent[0].mode) {
+            console.log('matched travel mode');
+            newTravelIndex = i;
+          }
+        }
+        var newArrivalIndex=0;  
+        for (var i = 0; i < earlyArrivalTimes.length; i++) {
+          if (earlyArrivalTimes[i].value === grabbedEvent[0].earlyArrival) {
+            console.log('matched early Arrival');
+            newArrivalIndex = i;
+          }
+        }
+        var newStateIndex = 4;  
+        for (var i = 0; i < stateNames.length; i++) {
+          if (stateNames[i].value === grabbedEvent[0].state) {
+            console.log('matched state name');
+            newStateIndex = i;
+          }
+        }
+
+        console.log('time to set state', grabbedEvent[0]);
+        this.setState({
+          eventName: grabbedEvent[0].eventName,
+          eventTime: grabbedEvent[0].eventTime,
+          address: grabbedEvent[0].address.slice(0, -1), //removing comma at the end of string
+          mode: grabbedEvent[0].mode,
+          travelIndex: newTravelIndex,
+          // need to set mode index
+          earlyArrivalIndex: newArrivalIndex,  //need to figure this out
+          stateNameIndex: newStateIndex,  //need to figure this out
+          city: grabbedEvent[0].city.slice(0, -1),  //removing comma at the end of string
+          date: new Date(grabbedEvent[0].eventTime),
+        });
+      } else {
+        console.log('resetting to all events.  failed to match a SINGLE event');
+        this.props.editEvent(null);
+      }
+    }
   }
 
   changeEarlyArrival(earlyArrivalIndex) {
@@ -165,8 +220,13 @@ class CreateEvent extends Component {
         userId: this.state.userId,
       };
       //call sendEvent
-      sendEvent(newEvent, this.props.getEvents);
+      if (this.props.eventId) {
+        updateEvent(this.props.eventId, newEvent, this.props.getEvents);
+      } else {
+        sendEvent(newEvent, this.props.getEvents);
+      }
       this.clearForm();
+      this.props.editEvent(null);
 
       var origin = this.state.initialPosition.coords;
       var that = this;
@@ -337,7 +397,8 @@ class CreateEvent extends Component {
               style={styles.segmented}
               values={this.state.values}
               onChange={this.onChange.bind(this)}
-              onValueChange={this.onValueChange.bind(this)}/>
+              onValueChange={this.onValueChange.bind(this)} 
+              selectedIndex={this.state.travelIndex} />
           </View>
 
         </View>

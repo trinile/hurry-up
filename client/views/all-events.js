@@ -39,12 +39,17 @@ class AllEvents extends Component {
     this.props.getEvents();
   }
 
+  editClicked(eventId) {
+    console.log('up to AllEvents.  eventId is: ', eventId);
+    this.props.editEvent(eventId, 0);
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>
         <ScrollView>
         {this.props.events.map((event, index) => 
-          <Event key = {index} event={event} buttonClicked = {this.buttonClicked.bind(this)}/>
+          <Event key = {index} event={event} buttonClicked = {this.buttonClicked.bind(this)} editClicked = {this.editClicked.bind(this)}/>
         )}
           <Text style={styles.welcome}>no more events</Text>
         </ScrollView>

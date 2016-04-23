@@ -65,7 +65,8 @@ getEventDirections(event) {
   }
 
   editEvent(event) {
-    console.log('edit event');
+    console.log('edit event', event.id);
+    this.props.editClicked(event.id);
   }
 
   displayTime(time) {
@@ -104,12 +105,12 @@ getEventDirections(event) {
 
     return (
       <View style={styles.EventContainer}>
-        <View style={styles.EventButtonRow}>
-          <Icon name="edit" style={styles.buttonStyle} onPress={this.editEvent.bind(this, this.props.event)}></Icon>
-          <View style={styles.ButtonEnd}>
-            <Icon name="android-cancel" style={styles.deleteButton} onPress={this.removeEvent.bind(this, this.props.event)}></Icon> 
-          </View> 
-        </View> 
+        <View style={styles.EventRow}>
+          <Text style={styles.EventButton}><Icon name="edit" style={styles.buttonStyle} onPress={this.editEvent.bind(this, this.props.event)}></Icon></Text>
+          <View style={styles.EventInput}>
+            <Text style={styles.EventText}><Icon name="android-cancel" style={styles.deleteButton} onPress={this.removeEvent.bind(this, this.props.event)}></Icon> </Text>
+          </View>
+        </View>
         <View style={styles.EventRow}>
           <Text style={styles.EventTitle}>Event:</Text>
           <View style={styles.EventInput}>
@@ -151,7 +152,7 @@ getEventDirections(event) {
 const styles = StyleSheet.create({
   buttonStyle: {
     borderRadius: 0,
-    marginRight: 15,
+    // marginRight: 15,
     color: "#FFFFFF",
   },
   deleteButton : {
@@ -173,26 +174,15 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     padding: 5
   },
-  Event2Row: {
-    flex: .6,
-    flexDirection:'row',
-  },
-  EventButtonRow: {
-    flex: 1,
-    // flexDirection:'row',
-    marginTop: -5,
-    alignItems: 'flex-end',
-    
-  },
-  ButtonEnd: {
-    flex: 1,
-    flexDirection:'row',
-  },
   EventTitle: {
     margin: 5,
     fontSize: 14,
     color: '#ACB2BE',
     textDecorationLine: 'underline'
+  },
+  EventButton: {
+    margin: 5,
+    marginBottom: 0,
   },
   EventInput: {
     flex: 1,
