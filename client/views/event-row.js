@@ -38,12 +38,15 @@ class Event extends Component {
           startAddress: '',
           durationText: '',
           distanceText: ''
-        }
+        },
+        overviewPolyLines: [],
+        region: {},
+        markers: {}
       } 
     };
   }
   
-  getEventDirections(event) {
+getEventDirections(event) {
     var that = this;
   
     // get current position first
@@ -84,7 +87,7 @@ class Event extends Component {
 
        <Text style={styles.accordianHeader}>
         <Icon name='android-walk' size={25}></Icon>
-        <Text style={styles.padLeft}>  Directions</Text>
+        <Text style='paddingLeft: 25'>  Directions</Text>
        </Text>
         
       </View>
@@ -133,6 +136,7 @@ class Event extends Component {
     );
   }
 };
+
 
 const styles = StyleSheet.create({
   EventContainer: {

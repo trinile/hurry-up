@@ -49,7 +49,6 @@ class Directions extends Component {
                 onRegionChangeComplete={this._onRegionChangeComplete}
                 region={this.state.mapRegion}
                 showUserLocation={true}
-                followUserLocation={true}
                 annotations={this.state.annotations}
               />
           <View style={styles.directions}>

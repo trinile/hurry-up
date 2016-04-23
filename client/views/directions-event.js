@@ -1,4 +1,5 @@
 import React, {
+  ActivityIndicatorIOS,
   Text,
   View,
   Component,
@@ -9,8 +10,8 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-
-//const windowSize = Dimensions.get('window');
+var TimerMixin = require('react-timer-mixin');
+const windowSize = Dimensions.get('window');
 
 /*
 
@@ -19,11 +20,11 @@ import React, {
     steps: [
        {
           instructions: 'Turn right on Powell',
-          duration: '2'
+          duration: '2 mins'
        },
        {
           instructions: 'Dodge screaming person on the right',
-          duration: '1'
+          duration: '1 mins'
        }
     ]
     leg: {
@@ -37,28 +38,65 @@ import React, {
 class Directions extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      animating: true,
+    }
   }
 
+  componentDidMount() {
+    var that = this;
+
+  }
+  // mixins: [TimerMixin]
+
   render() {
-    
+    console.log('steps ', this.props.directions.steps);
+
      return (
-      <View style={styles.DirectionsContainer} >
+      <View style={styles.DirectionsContainer}>
       <MapView
         style={styles.map}
-        region={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421}}
+        region={ this.props.directions.region}
+        annotations={this.props.directions.markers.markers}
         showsUserLocation={true}
-        followUserLocation={true}
+        overlays={[{
+          coordinates: this.props.directions.overviewPolyLine,
+          strokeColor: '#f007',
+          lineWidth: 3,
+        }]}
       />
         {
           <View style={styles.directions}>
-            <Text>Starting Address: {this.props.directions.leg.startAddress}</Text> 
-            <Text>Ending Address: {this.props.directions.leg.endAddress}</Text> 
-            <Text>Total Time: {this.props.directions.leg.durationText}</Text> 
-            <Text>Total Distance: {this.props.directions.leg.distanceText}</Text> 
+            
+            <View style={styles.EventRow}>
+            <Text style={styles.EventTitle}>Current Location: </Text>
+            <View style={styles.EventInput}>
+              <Text style={styles.EventText}>{this.props.directions.leg.startAddress}</Text>
+            </View>
+          </View>
+
+            <View style={styles.EventRow}>
+              <Text style={styles.EventTitle}>Total Time:  </Text>
+              <View style={styles.EventInput}>
+                <Text style={styles.EventText}>{this.props.directions.leg.durationText}</Text>
+              </View>
+            </View>
+
+            <View style={styles.EventRow}>
+              <Text style={styles.EventTitle}>Total Distance: </Text>
+              <View style={styles.EventInput}>
+                <Text style={styles.EventText}>{this.props.directions.leg.distanceText}</Text>
+              </View>
+            </View>
+
+            <View style={styles.EventRow}>
+              <Text style={styles.EventTitle}>Directions: </Text>
+                <View style={styles.EventInput}>
+                <Text style={styles.EventText}> {this.props.directions.steps[0].instructions}</Text>
+              </View>
+
+            </View>
+
           </View>
         }
       </View>
@@ -72,14 +110,37 @@ const styles = StyleSheet.create({
     
   },
   directions: {
-    padding: 10
+    padding: 15
+  },
+  EventRow: {
+    flex: 1,
+    flexDirection:'row',
+    padding: 5
+  },
+  EventTitle: {
+    margin: 5,
+    fontSize: 14,
+    color: '#ACB2BE',
+    textDecorationLine: 'underline'
+  },
+  EventInput: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  EventText: {
+    flex: 1,
+    margin: 5,
+    fontSize: 16,
+    color: '#F5F5F6',
   },
   map: {
-    height: 200,
+    height: 250,
     margin: 10,
     borderWidth: 1,
     borderColor: '#000000',
   }
 });
+
+
 
 export default Directions;

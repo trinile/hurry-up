@@ -55,6 +55,17 @@ This will give you a number that will need to be used as the from phone number i
 
 The client side is written entirely in React Native for iOS. The server is written in Node Express and uses the Sqlite database engine, along with the Bookshelf.js ORM and Knex SQL query builder.
 
+##Modules Added
+* polyline https://github.com/mapbox/polyline
+* Accordion https://www.npmjs.com/package/react-native-accordion
+* 
+
+## Added Features
+1. Sliding Menu
+2. Logout Feature
+3. Edit/Delete Events
+4. Directions for Events including Map/Route 
+
 ## Deployment
 
 The client side cannot be truly deployed to an iPhone without going through the app store approval process. For this reason, the client side must be tested through the Xcode simulator, or on the device through a USB connection.
