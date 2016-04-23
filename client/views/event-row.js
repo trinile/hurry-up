@@ -135,7 +135,6 @@ getEventDirections(event) {
             content={content}
             easing="easeOutCubic"
             onPress={this.getEventDirections.bind(this, this.props.event)}
-            style={styles.accordian}
           />
       </View>
     );
@@ -220,7 +219,7 @@ const styles = StyleSheet.create({
 
   accordian: {
     flex: 1,
-    padding: 0
+    padding: 0,
   }, 
 
   accordianHeader: {
