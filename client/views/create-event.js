@@ -135,6 +135,9 @@ class CreateEvent extends Component {
 
 
   componentWillReceiveProps (nextProps) {
+    if (nextProps.resetForm) {
+      this.clearForm();
+    }
     if (nextProps.eventId) {
       // console.log('eventId updated: ', nextProps.eventId);
       var grabbedEvent = this.props.events.filter(function(eachEvent) {
