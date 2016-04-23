@@ -27,25 +27,16 @@ class Main extends Component {
   constructor(props) {
     super(props);
     console.log('main props: ', props);
+
   }
   
   _navigate(route) {
-    this._navigator.replace(navHelper(route, this.props.events, this.props.getEvents, this.props.userId, this._navigate.bind(this)));
+    this._navigator.push(navHelper(route));
     this._drawer.close();
   }
-  
-  componentWillReceiveProps(nextProps) {
-    console.log('Main componentWillReceiveProps: ', nextProps);
-    // this._navigator.replace(navHelper(route, this.props.events, this.props.getEvents, this.props.userId));
-    // this.props.events = nextProps.events;
-    // this.render();
-  }
-  
  
   render() {
-    console.log('props.events in Main render: ', this.props.events);
     return (
-      
       <Drawer
         ref={(ref) => this._drawer = ref}
         type="overlay"
@@ -55,7 +46,7 @@ class Main extends Component {
         panCloseMask={0.2}
         closedDrawerOffset={-3}
         styles={{
-          drawer: {shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3, backgroundColor: 'white'},
+          drawer: {shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
           main: {paddingLeft: 3}
         }}
         tweenHandler={(ratio) => ({
@@ -65,7 +56,7 @@ class Main extends Component {
           ref={(ref) => this._navigator = ref}
           style={{flex: 1}}
           initialRoute={{
-              title: 'My Events 1',
+              title: 'My Events',
               component: AllEvents,
               leftButtonIcon: hamburgerIcon,
               passProps: {
