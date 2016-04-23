@@ -158,9 +158,9 @@ class Directions extends Component {
 const styles = StyleSheet.create({
   DirectionsContainer: {
     flex: 1,
-    height: 500
+    height: 500,
     padding: 15,
-    height: 900,
+    height: 900
   },
   directions: {
     padding: 15
