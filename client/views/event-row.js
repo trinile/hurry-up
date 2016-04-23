@@ -23,7 +23,7 @@ const deviceWidth = Dimensions.get('window').width;
 var SECTIONS = [
   {
     title: 'Directions',
-    content: 'Hola',
+    content: '',
   }
 ];
 
@@ -31,7 +31,6 @@ class Event extends Component {
 
   constructor(props) {
     super(props);
-    // console.log('event prop', this.props.event.eventName);
     this.state = {
       directions: {
         steps: [
@@ -52,21 +51,7 @@ class Event extends Component {
       } 
     };
   }
-  
-  // getEventDirections(event) {
-  //   var that = this;
-  
-  //   // get current position first
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     //on success, call getDirections from request-helpers
-  //     getDirections(event, position, that);
-  //   },
-  //   (error) => console.log(error.message),
-  //   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});   
-    
-
-  // }
-
+ 
   _renderHeader(section) {
 
     var textPadding = {
