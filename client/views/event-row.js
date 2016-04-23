@@ -76,6 +76,8 @@ getEventDirections(event) {
     if (Number(hours) > 12) {
       postfix = 'PM';
       hours = hours - 12;
+    } else if ( Number(hours) === 12 ){
+      postfix = 'PM';
     } else {
       postfix = 'AM';
     }
