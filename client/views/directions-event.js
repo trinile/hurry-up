@@ -88,6 +88,7 @@ class Directions extends Component {
     (error) => console.log(error.message),
     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});   
     
+    this.render();
   }
 
   render() {
@@ -143,7 +144,7 @@ class Directions extends Component {
               </View>
             {this.state.directions.steps.map((step, index) => 
               <View style={styles.EventInput} key={index} >
-                <Text style={styles.EventText}> {step.instructions} </Text>
+                <Text style={styles.EventText}> {++index}. {step.instructions} </Text>
               </View>
             )}
 
@@ -158,7 +159,8 @@ const styles = StyleSheet.create({
   DirectionsContainer: {
     flex: 1,
     height: 500
-    
+    padding: 15,
+    height: 900,
   },
   directions: {
     padding: 15
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
   },
   EventInput: {
     flex: 1,
-    alignItems: 'flex-end',
+    // alignItems: 'flex-end',
   },
   EventText: {
     flex: 1,

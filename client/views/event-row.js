@@ -52,6 +52,7 @@ class Event extends Component {
       } 
     };
   }
+<<<<<<< HEAD
  
   _renderHeader(section) {
 
@@ -75,6 +76,20 @@ class Event extends Component {
         <Directions event={this.props.event} />
       </View>
     );
+=======
+  
+getEventDirections(event) {
+    var that = this;
+  
+    // get current position first
+    navigator.geolocation.getCurrentPosition((position) => {
+      //on success, call getDirections from request-helpers
+      getDirections(event, position, that);
+    },
+    (error) => console.log(error.message),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});   
+    
+>>>>>>> merging conflicts in event-row and router-helpers
   }
 
   removeEvent(event) {
@@ -107,6 +122,23 @@ class Event extends Component {
   }
 
   render() {
+    var header = (
+      <View>
+
+       <Text style={styles.accordianHeader}>
+        <Icon name='android-walk' size={25}></Icon>
+        <Text style={styles.directionHeader}>  Directions</Text>
+       </Text>
+        
+      </View>
+    );
+ 
+    var content = (   
+        <View>
+          <Directions directions = {this.state.directions} />
+          <Text></Text>
+        </View>
+    );
 
     return (
       <View style={styles.EventContainer}>
@@ -240,7 +272,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#34778A',
   },
-  padLeft: {
+  directionHeader: {
     paddingLeft: 25
   }
 });
