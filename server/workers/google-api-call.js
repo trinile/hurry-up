@@ -47,14 +47,20 @@ var googleWorker = function(event, origin, phoneNumber) {
     else {
       var duration = parsedBody.routes[0].legs[0].duration.value;
       var timeoutDuration = (arrivalTime - duration) - currentTime;
+      var textMessage = '';
+
       if (timeoutDuration < 0) {
+        var late =  Math.ceil((timeoutDuration * -1) / 60);
+        textMessage = 'You are already ' + late + ' minute' + ((late === 1) ? '' : 's') + ' late! Leave now to get to ' + event.eventName;
         timeoutDuration = 0;
+      } else {
+        textMessage = 'Hurry Up! Leave now to get to ' + event.eventName + ' by ' + eventTime;
       }
       if (events[event.id]) {
         clearTimeout(events[event.id]);
       }
       events[event.id] = setTimeout(function() {
-        TwilioSend(phoneNumber, event, duration + event.earlyArrival);
+        TwilioSend(phoneNumber, event, duration + event.earlyArrival, textMessage);
         alreadySentTwilio(event);
       }, timeoutDuration * 1000);
     }

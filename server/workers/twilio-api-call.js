@@ -17,15 +17,16 @@ var displayTime = function(time) {
   return hours + ':' + minutes + ' ' + postfix;
 };
 
-var sendText = function(userPhoneNumber, event, timeoutTime) {
+var sendText = function(userPhoneNumber, event, timeoutTime, message) {
   var eventTime = displayTime(event.eventTime);
+
   //send twilio text
   client.sendMessage({
     to: userPhoneNumber,  // Any number Twilio can deliver to
     from: Keys.twilioPhoneNumber, // ten digits, with a leading '+' sign and no dashes,
     // for example: '+14151234567' - this is a number you bought 
     // from Twilio and set up in your server/api_keys.js file (which is .gitignored)
-    body: 'Hurry Up! Leave now to get to ' + event.eventName + ' by ' + eventTime // body of the SMS message
+    body: message // body of the SMS message
   }, function(err, responseData) { //this function is executed when a response is received from Twilio
     if (err) {
       console.log('Error sending Twilio text', err);
