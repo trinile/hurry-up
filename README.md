@@ -1,12 +1,16 @@
 # hurry-up
 
+This is a fork of the [original project] (https://github.com/LuxuriousNeckbeards/hurry-up) by Luxurious Neckbeards.
+
+
 The goal of hurry-up is to make sure you are never late to an appointment again. hurry-up allows users to save an appointment and receive a text message reminder when they should leave, based on wherever their location happens to be at that time.
 
 ## Installation
 
 1. Install all dependencies (there are many!) - run `npm install`
 2. Run rnpm link
-2. To run the server - from the root directory do `nodemon server/server.js`
+3. Add your ```api_keys.js``` file to the server folder - see [API Keys] below.
+4. To run the server - from the root directory do `nodemon server/server.js`
 
 #### Client-side specifics
 
@@ -29,7 +33,7 @@ The goal of hurry-up is to make sure you are never late to an appointment again.
 2. In emulator, cmd-D it will open a debugger window.
 
 
-## API's
+## API Keys
 
 This project will require developer accounts for two API's: Google Maps for location information, and Twilio to send text messages to users. It should be noted that each trial Twilio account allows texting to a single phone number. Each team member might need to create a separate account for testing purposes.
 
@@ -44,7 +48,7 @@ var API_KEYS = {
 };
 module.exports = API_KEYS;
 ```
-Make sure the Twilio phone number is ten digits, with a leading + sign and no dashes - for example: '+14151234567'
+Make sure the Twilio phone number is a string of ten digits, with a leading + sign and no dashes - for example: '+14151234567'
 
 Create Twilio Phone Number
 
@@ -56,19 +60,28 @@ This will give you a number that will need to be used as the from phone number i
 
 The client side is written entirely in React Native for iOS. The server is written in Node Express and uses the Sqlite database engine, along with the Bookshelf.js ORM and Knex SQL query builder.
 
-##Modules Added
-* polyline https://github.com/mapbox/polyline
-* Accordion https://www.npmjs.com/package/react-native-accordion
-* 
-
-## Added Features
-1. Sliding Menu
-2. Logout Feature
-3. Edit/Delete Events
-4. Directions for Events including Map/Route 
-
 ## Deployment
 
 The client side cannot be truly deployed to an iPhone without going through the app store approval process. For this reason, the client side must be tested through the Xcode simulator, or on the device through a USB connection.
 
 Our server side code and database is currently deployed to Digital Ocean.
+
+## Features We Added
+1. Ability to edit/delete events
+2. Directions for events, including map/route
+3. Error handling for sign up / sign in
+4. Different text messages based on time until event; i.e. the app texts you when it is time to leave, but if you are already late when you add the event, the text tells you how late you are.
+5. Added a picker menu for selecting states in the destination.
+6. Fixed errors with 12:00 pm events.
+7. Events display on app load, rather than waiting for user to refresh. 
+
+## NPM Modules We Added
+* [polyline] (https://github.com/mapbox/polyline)
+* [react-native-collapsible] (https://github.com/oblador/react-native-collapsible)
+* [react-native-vector-icons] (https://github.com/oblador/react-native-vector-icons)
+* [rnpm] (https://github.com/rnpm/rnpm)
+
+## Roadmap
+
+See our [issues] (https://github.com/mediocreokra/hurry-up/issues) for features to be added. 
+
