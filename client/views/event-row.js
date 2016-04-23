@@ -102,7 +102,7 @@ class Event extends Component {
   }
 
   confirmDelete() {
-    console.log('confirmDelete called');
+    // console.log('confirmDelete called');
     this.removeEvent.bind(this, this.props.event)();
   }
 
