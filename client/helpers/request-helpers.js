@@ -1,4 +1,4 @@
-/* Use  path 104.236.147.132 instead of localhost in production mode*/
+ /* Use  path 104.236.147.132 instead of localhost in production mode*/
 
 export const sendEvent = (newEvent, cb) => {
   fetch('http://localhost:8080/api/events' , {
@@ -12,17 +12,35 @@ export const sendEvent = (newEvent, cb) => {
   .then((response) => {
     console.log('Event POST response: ', response);
     if (cb) {
-      console.log('do callback branch in sendEvent');
+      // console.log('do callback branch in sendEvent');
       cb();
     } else {
-      console.log('callback not defined in sendEvent');
+      // console.log('callback not defined in sendEvent');
+    }
+  })
+  .catch((error) => console.warn('Unable to send event', error));
+};
+
+export const updateEvent = (eventId, newEvent, cb) => {
+  fetch('http://localhost:8080/api/events/' + eventId, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newEvent),
+  })
+  .then((response) => {
+    console.log('Event PUT response: ', response);
+    if (cb) {
+      // console.log('doing callback branch in updateEvent');
+      cb();
     }
   })
   .catch((error) => console.warn('Unable to send event', error));
 };
 
 export const deleteEvent = (eventId, cb) => {
-  console.log('*******attempting to delete in request-helpers*********')
   fetch('http://localhost:8080/api/events/' + eventId, {
     method: 'DELETE',
     headers: {
@@ -34,11 +52,9 @@ export const deleteEvent = (eventId, cb) => {
   .then((response) => {
     console.log('Event DELETE response: ', response);
     if (cb) {
-      console.log('do callback branch in deleteEvent');
+      // console.log('do callback branch in deleteEvent');
       cb();
-    } else {
-      console.log('callback not defined in deleteEvent');
-    }
+    } 
   })
   .catch((error) => console.warn('Unable to delete event', error));
 };

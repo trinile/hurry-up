@@ -24,7 +24,7 @@ class Event extends Component {
 
   constructor(props) {
     super(props);
-    console.log('event prop', this.props.event.eventName);
+    // console.log('event prop', this.props.event.eventName);
     this.state = {
       directions: {
         steps: [
@@ -61,9 +61,12 @@ getEventDirections(event) {
   }
 
   removeEvent(event) {
-    console.log('*******************in removeEvent*****************');
-    console.log(event.id);
-    deleteEvent(event.id);
+    deleteEvent(event.id, this.props.buttonClicked);
+  }
+
+  editEvent(event) {
+    // console.log('edit event', event.id);
+    this.props.editClicked(event.id);
   }
 
   displayTime(time) {
@@ -87,7 +90,7 @@ getEventDirections(event) {
 
        <Text style={styles.accordianHeader}>
         <Icon name='android-walk' size={25}></Icon>
-        <Text style='paddingLeft: 25'>  Directions</Text>
+        <Text style={styles.padLeft}>  Directions</Text>
        </Text>
         
       </View>
@@ -103,6 +106,12 @@ getEventDirections(event) {
     return (
       <View style={styles.EventContainer}>
         <View style={styles.EventRow}>
+          <Text style={styles.EventButton}><Icon name="edit" style={styles.buttonStyle} onPress={this.editEvent.bind(this, this.props.event)}></Icon></Text>
+          <View style={styles.EventInput}>
+            <Text style={styles.EventText}><Icon name="android-cancel" style={styles.deleteButton} onPress={this.removeEvent.bind(this, this.props.event)}></Icon> </Text>
+          </View>
+        </View>
+        <View style={styles.EventRow}>
           <Text style={styles.EventTitle}>Event:</Text>
           <View style={styles.EventInput}>
             <Text style={styles.EventText}>{this.props.event.eventName} @ {this.displayTime(this.props.event.eventTime)} on {this.props.event.eventTime.substring(0,10)}</Text>
@@ -113,7 +122,6 @@ getEventDirections(event) {
           <View style={styles.EventInput}>
             <Text style={styles.EventText}>{this.props.event.address}</Text>
             <Text style={styles.EventText}>{this.props.event.city} {this.props.event.state}</Text>
-
           </View>
         </View>
         <View style={styles.EventRow}>
@@ -121,11 +129,6 @@ getEventDirections(event) {
           <View style={styles.EventInput}>
             <Text style={styles.EventText}>{this.props.event.mode}</Text>
           </View>
-        </View>   
-        <View style={styles.EventRow}>
-          <Icon.Button name="android-cancel" backgroundColor="#cc0000" onPress={this.removeEvent.bind(this, this.props.event)}>
-            <Text style={styles.buttonText}>Delete</Text>
-          </Icon.Button>  
         </View>       
          <Accordion
             header={header}
@@ -141,8 +144,22 @@ getEventDirections(event) {
 
 
 const styles = StyleSheet.create({
+  buttonStyle: {
+    borderRadius: 0,
+    // marginRight: 15,
+    color: "#FFFFFF",
+  },
+  deleteButton : {
+    borderRadius: 0,
+    color: "#cc0000",
+  },
   EventContainer: {
     flex: 1,
+    margin: 7,
+    marginTop: 0,
+    padding: 15,
+    borderWidth: 1,
+    borderColor: 'transparent',
     borderBottomColor: '#F5F5F6',
     borderBottomWidth: 1
   },
@@ -156,6 +173,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#ACB2BE',
     textDecorationLine: 'underline'
+  },
+  EventButton: {
+    margin: 5,
+    marginBottom: 0,
   },
   EventInput: {
     flex: 1,
@@ -187,11 +208,14 @@ const styles = StyleSheet.create({
     fontFamily: 'HelveticaNeue-Light',
   },
 
-  iconButton: {
-    padding: 15,
-    width: deviceWidth,
-    alignItems: 'center',
-    backgroundColor: '#34778A',
+  // iconButton: {
+  //   padding: 15,
+  //   width: deviceWidth,
+  //   alignItems: 'center',
+  //   backgroundColor: '#34778A',
+  // },
+  padLeft: {
+    paddingLeft: 25,
   },
 
   accordian: {

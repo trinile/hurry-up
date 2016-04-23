@@ -23,4 +23,6 @@ app.post('/api/directions', route.getEventDirections);
 
 app.put('/api/users/:id', route.updateUserLocation);
 
+app.put('/api/events/:id', route.updateEvent);
+
 module.exports = app;

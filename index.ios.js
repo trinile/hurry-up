@@ -27,6 +27,9 @@ class hurryup extends Component {
       loggedIn: false,
       userId: null,
       events: [],
+      eventId: null,  //adding an event id here to pass for editing
+      pageView: 1,  //used for setting default page/ all vs create
+      resetForm: false, //to reset the create form if we leave the form
     };
   }
 
@@ -43,7 +46,31 @@ class hurryup extends Component {
     getAllEvents(that);
   }
 
-  render() {
+  editEvent(eventId, pageView) {
+    console.log('testing pageView: ', pageView)
+    this.setState({
+      eventId: eventId,  //this will update the eventId which will hopefully cascade to create events
+      pageView: pageView, //hack to swap pages
+    });
+    this.render();
+  }
+
+  resetPageTest(page) {
+    console.log('in on scroll: ', page);
+    if (page ===1 && this.state.eventId) {
+      this.editEvent(null);
+      console.log('reset the eventId');
+      this.setState({
+        resetForm: true
+      });
+      this.setState({
+        resetForm: false
+      });
+    }
+  }
+
+  render(newPage) {
+    console.log('rendering index.ios  pageView: ', this.state.pageView);
     return (
       <View style={styles.parent}>
         <Image
@@ -54,15 +81,17 @@ class hurryup extends Component {
         </Text>
         {this.state.loggedIn
           ? (<ScrollableTabView
-              page={1}
+              page={this.state.pageView===0 ? 0 : 1}
               style={{marginTop: 0, top: 0}}
               tabBarUnderlineColor="#F5F5F6"
               tabBarActiveTextColor="#F5F5F6"
               tabBarInactiveTextColor="#ACB2BE"
               tabBarBackgroundColor="transparent"
-              tabBarTextStyle={{fontFamily: 'HelveticaNeue-Light', fontSize: 15}}>
-              <CreateEvent userId = {this.state.userId} tabLabel='Create Event' events = {this.state.events} getEvents = {this.getEvents.bind(this)}/>
-              <AllEvents userId = {this.state.userId} tabLabel='My Events' events = {this.state.events} getEvents = {this.getEvents.bind(this)} />
+              tabBarTextStyle={{fontFamily: 'HelveticaNeue-Light', fontSize: 15}}
+              onScroll = { (page) => this.resetPageTest(page)}
+              >
+              <CreateEvent userId = {this.state.userId} eventId = {this.state.eventId}tabLabel='Create Event' events = {this.state.events} getEvents = {this.getEvents.bind(this)} editEvent = {this.editEvent.bind(this)} resetForm = {this.state.resetForm} />
+              <AllEvents userId = {this.state.userId} tabLabel='My Events' events = {this.state.events} getEvents = {this.getEvents.bind(this)} editEvent = {this.editEvent.bind(this)} />
             </ScrollableTabView>)
           : (<ScrollableTabView
               style={{marginTop: 0, top: 0}}

@@ -50,6 +50,40 @@ exports.addEvent = function(req, res) {
     });
 };
 
+exports.updateEvent =  function(req, res) {
+  var eventId = req.params.id;
+
+  var mode         = req.body.mode;
+  var eventName    = req.body.eventName;
+  var eventTime    = req.body.eventTime;
+  var address      = req.body.address;
+  var city         = req.body.city;
+  var state        = req.body.state;
+  var earlyArrival = req.body.earlyArrival;
+
+  Event.where({ id: eventId })
+    .fetch()
+    .then(function(event) {
+      event.set('mode', mode);
+      event.set('eventName', eventName);
+      event.set('eventTime', eventTime);
+      event.set('address', address);
+      event.set('city', city);
+      event.set('state', state);
+      event.set('twilioSent', 'false');
+      event.set('earlyArrival', earlyArrival);
+
+      event.save()
+        .then(function(updatedEvent) {
+          res.status(201).send({updatedEvent: updatedEvent});
+        });
+    })
+    .catch(function(err) {
+      console.error('Could not find event in database: ', err);
+      res.status(404).send(err);
+    });
+};
+
 exports.updateUserLocation =  function(req, res) {
   var userId = req.params.id;
   var origin = req.body.origin;
@@ -105,12 +139,10 @@ exports.getAllUserEvents = function(req, res) {
 exports.removeUserEvent = function(req, res) {
   var eventId = req.params.id;
   
-  console.log('in removeUserEvent and eventId is: ', eventId);
   Event.where({ id: eventId })
-    // .fetchAll({})
     .destroy({})
     .then(function(event) {
-      console.log('Found 1 user event in removeUserEvent');
+      // console.log('Found 1 user event in removeUserEvent');
       res.send();
     })
     .catch(function(err) {
