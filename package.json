@@ -6,7 +6,6 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    // "node" : "^4.4.2",
     "bcrypt": "^0.8.5",
     "body-parser": "^1.15.0",
     "bookshelf": "^0.9.4",
