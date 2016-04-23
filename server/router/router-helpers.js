@@ -6,6 +6,7 @@ var googleWorker = require('../workers/google-api-call.js');
 var request = require('request');
 var SALT_WORK_FACTOR = 10;
 var API_KEYS = require('../api_keys.js');
+var polyline = require('polyline');
 
 exports.addEvent = function(req, res) {
   var mode         = req.body.mode;
@@ -228,6 +229,58 @@ exports.getEventDirections = function(req, response) {
       };
     });
 
+    var overviewPolyLine = parsedBody.routes[0].overview_polyline.points;
+    overviewPolyLine = polyline.decode(overviewPolyLine);
+    overviewPolyLine = overviewPolyLine.map(function(arrLines) {
+      return { latitude: arrLines[0], longitude: arrLines[1]};
+    });
+
+    var bounds = {
+      northeast: { 
+        lat: parsedBody.routes[0].bounds.northeast.lat,
+        lng: parsedBody.routes[0].bounds.northeast.lng,
+      },
+      southwest: {
+        lat: parsedBody.routes[0].bounds.southwest.lat,
+        lng: parsedBody.routes[0].bounds.southwest.lng,
+      }
+    };
+
+    var latCenter = (bounds.northeast.lat + bounds.southwest.lat) / 2;
+    var lngCenter = (bounds.northeast.lng + bounds.southwest.lng) / 2;
+    console.log(bounds);
+
+    var region = {
+      latitude: latCenter,
+      longitude: lngCenter,
+      latitudeDelta: Math.abs(latCenter - bounds.northeast.lat) * 3.5 ,
+      longitudeDelta: Math.abs(lngCenter - bounds.northeast.lng) * 3.5
+    };
+
+    console.log('region ', region);
+
+    var startOrigin = {
+      lat: parsedBody.routes[0].legs[0].start_location.lat,
+      lng: parsedBody.routes[0].legs[0].start_location.lng
+    };
+
+    var endOrigin = {
+      lat: parsedBody.routes[0].legs[0].end_location.lat,
+      lng: parsedBody.routes[0].legs[0].end_location.lng
+    };
+
+    var markers = {
+      markers : [{
+        latitude: endOrigin.lat,
+        longitude: endOrigin.lng,
+        title: 'End Destination'
+      },
+       { latitude: startOrigin.lat,
+        longitude: startOrigin.lng,
+        title: 'Current Location'
+      }]
+    };
+
     var leg = {
       endAddress: parsedBody.routes[0].legs[0].end_address,
       startAddress: parsedBody.routes[0].legs[0].start_address,
@@ -235,7 +288,9 @@ exports.getEventDirections = function(req, response) {
       distanceText: parsedBody.routes[0].legs[0].distance.text
     };
 
-    response.status(200).send({ steps: arrSteps, leg: leg });
+
+
+    response.status(200).send({ steps: arrSteps, leg: leg, overviewPolyLine: overviewPolyLine, region: region, markers: markers});
   });
 
 
