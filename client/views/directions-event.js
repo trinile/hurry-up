@@ -10,7 +10,6 @@ import React, {
   TouchableHighlight
 } from 'react-native';
 
-var TimerMixin = require('react-timer-mixin');
 const windowSize = Dimensions.get('window');
 
 /*
@@ -142,7 +141,6 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
   }
 });
-
 
 
 export default Directions;

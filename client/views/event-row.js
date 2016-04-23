@@ -91,6 +91,7 @@ getEventDirections(event) {
        <Text style={styles.accordianHeader}>
         <Icon name='android-walk' size={25}></Icon>
         <Text style={styles.padLeft}>  Directions</Text>
+
        </Text>
         
       </View>
@@ -122,6 +123,7 @@ getEventDirections(event) {
           <View style={styles.EventInput}>
             <Text style={styles.EventText}>{this.props.event.address}</Text>
             <Text style={styles.EventText}>{this.props.event.city} {this.props.event.state}</Text>
+
           </View>
         </View>
         <View style={styles.EventRow}>
@@ -235,5 +237,5 @@ const styles = StyleSheet.create({
   }
 });
 
-
 export default Event;
+

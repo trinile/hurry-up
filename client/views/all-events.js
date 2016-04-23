@@ -37,11 +37,13 @@ class AllEvents extends Component {
     // var that = this;
     // getAllEvents(that);
     this.props.getEvents();
+
   }
 
   editClicked(eventId) {
     // console.log('up to AllEvents.  eventId is: ', eventId);
     this.props.editEvent(eventId, 0);
+
   }
 
   render() {
