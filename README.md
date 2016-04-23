@@ -43,7 +43,7 @@ See our [issues] (https://github.com/mediocreokra/hurry-up/issues) for features 
 2. Click **Build and Run (PLAY BUTTON)** to open the application in the simulator
  * Immediately got to Debug -> Simulate Location -> San Francisco, CA (or choose other locations). 
  * App will be unable to retrieve location if no location is simulated.
-3. This application has only been tested on iPhone 5 and 6 models. 
+3. This application has only been tested on iPhone 6+ models. 
  * Visual elements will not display correctly on older models.
  * Note: Xcode 7.3 required for IOS 9.3.1 and above to test on iphone directly.
 
