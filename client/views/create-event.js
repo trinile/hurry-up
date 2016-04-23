@@ -136,10 +136,10 @@ class CreateEvent extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.eventId) {
-      console.log('eventId updated: ', nextProps.eventId);
+      // console.log('eventId updated: ', nextProps.eventId);
       var grabbedEvent = this.props.events.filter(function(eachEvent) {
         if (eachEvent.id === nextProps.eventId) {
-          console.log('matched event');
+          // console.log('matched event');
           return true;
         };
         return false;
@@ -148,26 +148,26 @@ class CreateEvent extends Component {
         var newTravelIndex = 0;
         for (var i = 0; i < this.state.values.length; i++) {
           if (this.state.values[i] === grabbedEvent[0].mode) {
-            console.log('matched travel mode');
+            // console.log('matched travel mode');
             newTravelIndex = i;
           }
         }
         var newArrivalIndex=0;  
         for (var i = 0; i < earlyArrivalTimes.length; i++) {
           if (earlyArrivalTimes[i].value === grabbedEvent[0].earlyArrival) {
-            console.log('matched early Arrival');
+            // console.log('matched early Arrival');
             newArrivalIndex = i;
           }
         }
         var newStateIndex = 4;  
         for (var i = 0; i < stateNames.length; i++) {
           if (stateNames[i].value === grabbedEvent[0].state) {
-            console.log('matched state name');
+            // console.log('matched state name');
             newStateIndex = i;
           }
         }
 
-        console.log('time to set state', grabbedEvent[0]);
+        // console.log('time to set state', grabbedEvent[0]);
         this.setState({
           eventName: grabbedEvent[0].eventName,
           eventTime: grabbedEvent[0].eventTime,
@@ -181,7 +181,7 @@ class CreateEvent extends Component {
           date: new Date(grabbedEvent[0].eventTime),
         });
       } else {
-        console.log('resetting to all events.  failed to match a SINGLE event');
+        console.log('Error: resetting to all events.  failed to match a SINGLE event');
         this.props.editEvent(null);
       }
     }

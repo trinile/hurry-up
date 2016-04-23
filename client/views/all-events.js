@@ -40,7 +40,7 @@ class AllEvents extends Component {
   }
 
   editClicked(eventId) {
-    console.log('up to AllEvents.  eventId is: ', eventId);
+    // console.log('up to AllEvents.  eventId is: ', eventId);
     this.props.editEvent(eventId, 0);
   }
 

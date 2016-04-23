@@ -1,4 +1,4 @@
-/* Use  path 104.236.147.132 instead of localhost in production mode*/
+ /* Use  path 104.236.147.132 instead of localhost in production mode*/
 
 export const sendEvent = (newEvent, cb) => {
   fetch('http://localhost:8080/api/events' , {
@@ -12,10 +12,10 @@ export const sendEvent = (newEvent, cb) => {
   .then((response) => {
     console.log('Event POST response: ', response);
     if (cb) {
-      console.log('do callback branch in sendEvent');
+      // console.log('do callback branch in sendEvent');
       cb();
     } else {
-      console.log('callback not defined in sendEvent');
+      // console.log('callback not defined in sendEvent');
     }
   })
   .catch((error) => console.warn('Unable to send event', error));
@@ -33,7 +33,7 @@ export const updateEvent = (eventId, newEvent, cb) => {
   .then((response) => {
     console.log('Event PUT response: ', response);
     if (cb) {
-      console.log('doing callback branch in updateEvent');
+      // console.log('doing callback branch in updateEvent');
       cb();
     }
   })
@@ -52,7 +52,7 @@ export const deleteEvent = (eventId, cb) => {
   .then((response) => {
     console.log('Event DELETE response: ', response);
     if (cb) {
-      console.log('do callback branch in deleteEvent');
+      // console.log('do callback branch in deleteEvent');
       cb();
     } 
   })
