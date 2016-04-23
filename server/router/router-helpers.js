@@ -192,6 +192,7 @@ exports.signup = function(req, res) {
     .then(function(found) {
       if (found) {
         console.log('Sorry, that username is already in the database!');
+        res.status(409).send({success: false});
       } else {
         bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
           if (err) {

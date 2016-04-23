@@ -1,4 +1,5 @@
 import React, {
+  Alert,
   Text,
   View,
   Image,
@@ -41,6 +42,17 @@ class Login extends Component {
     }
   }
 
+  onDuplicateUser() {
+    Alert.alert(
+              null,
+              'Sorry, that username is already taken!',
+              [
+                {text: 'OK',},
+              ]
+            );
+    this.setState({username: ''});
+  }
+
   onSignup() {
     if (this.state.username && this.state.password && this.state.phoneNumber) {
       var newUser = {
@@ -49,7 +61,7 @@ class Login extends Component {
         phoneNumber: this.state.phoneNumber,
       };
       var that = this;
-      createUser(newUser, that);
+      createUser(newUser, that, this.onDuplicateUser.bind(this));
     } else {
       alert( 'You must fill out each field!' );
     }

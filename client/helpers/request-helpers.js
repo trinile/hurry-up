@@ -59,7 +59,7 @@ export const deleteEvent = (eventId, cb) => {
   .catch((error) => console.warn('Unable to delete event', error));
 };
 
-export const createUser = (newUser, context) => {
+export const createUser = (newUser, context, cb) => {
   fetch('http://localhost:8080/api/signup', {
     method: 'POST',
     headers: {
@@ -74,7 +74,15 @@ export const createUser = (newUser, context) => {
   .then((actualResponse) => {
     if (actualResponse.success) {
       context.state.handleClick(actualResponse.id);
+    } else {
+      if (cb) {
+        cb();
+      } else {
+        // no callback, silent failure.. only logs to the console.  user has no clue.
+        console.log('In request-helpers.js: unsuccesful user creation');
+      }
     }
+
   })
   .catch((error) => console.warn('Error creating user', error));
 };
