@@ -71,6 +71,7 @@ class hurryup extends Component {
 
   render(newPage) {
     console.log('rendering index.ios  pageView: ', this.state.pageView);
+
     return (
       <View style={styles.parent}>
         <Image
@@ -88,10 +89,10 @@ class hurryup extends Component {
               tabBarInactiveTextColor="#ACB2BE"
               tabBarBackgroundColor="transparent"
               tabBarTextStyle={{fontFamily: 'HelveticaNeue-Light', fontSize: 15}}
-              onScroll = { (page) => this.resetPageTest(page)}
-              >
+              onScroll = { (page) => this.resetPageTest(page)}>
               <CreateEvent userId = {this.state.userId} eventId = {this.state.eventId}tabLabel='Create Event' events = {this.state.events} getEvents = {this.getEvents.bind(this)} editEvent = {this.editEvent.bind(this)} resetForm = {this.state.resetForm} />
               <AllEvents userId = {this.state.userId} tabLabel='My Events' events = {this.state.events} getEvents = {this.getEvents.bind(this)} editEvent = {this.editEvent.bind(this)} />
+
             </ScrollableTabView>)
           : (<ScrollableTabView
               style={{marginTop: 0, top: 0}}
