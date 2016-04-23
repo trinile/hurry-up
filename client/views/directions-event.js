@@ -44,8 +44,7 @@ class Directions extends Component {
   }
 
   componentDidMount() {
-    var that = this;
-
+    this.render();
   }
   // mixins: [TimerMixin]
 
@@ -67,15 +66,6 @@ class Directions extends Component {
       />
         {
           <View style={styles.directions}>
-            {
-            /*<View style={styles.EventRow}>
-            <Text style={styles.EventTitle}>Current Location: </Text>
-            <View style={styles.EventInput}>
-              <Text style={styles.EventText}>{this.props.directions.leg.startAddress}</Text>
-            </View>
-          </View>
-          */
-          }
             <View style={styles.EventRow}>
               <Text style={styles.EventTitle}>Total Time:  </Text>
               <View style={styles.EventInput}>
@@ -95,7 +85,7 @@ class Directions extends Component {
               </View>
             {this.props.directions.steps.map((step, index) => 
               <View style={styles.EventInput} key={index} >
-                <Text style={styles.EventText}> {step.instructions} </Text>
+                <Text style={styles.EventText}> {++index}. {step.instructions} </Text>
               </View>
             )}
 
@@ -109,7 +99,8 @@ class Directions extends Component {
 const styles = StyleSheet.create({
   DirectionsContainer: {
     flex: 1,
-    
+    padding: 15,
+    height: 900,
   },
   directions: {
     padding: 15
@@ -127,7 +118,7 @@ const styles = StyleSheet.create({
   },
   EventInput: {
     flex: 1,
-    alignItems: 'flex-end',
+    // alignItems: 'flex-end',
   },
   EventText: {
     flex: 1,

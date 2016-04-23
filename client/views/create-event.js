@@ -180,7 +180,6 @@ class CreateEvent extends Component {
       //the handler by passing it to the Geolocation.clearWatch() method.
       this.watchID = navigator.geolocation.watchPosition((position) => {
         console.log('im a called?');
-        debugger;
         var lastPosition = position;
         this.setState({ lastPosition });
         var initialPosition   = this.state.initialPosition;
