@@ -3,22 +3,7 @@ var Event = require('../app/models/event.js');
 //require the Twilio module and create a REST client
 var client = require('twilio')(Keys.twilioAccountSid, Keys.twilioAuthToken);
 
-var displayTime = function(time) {
-  var dateString = time.toString();
-  var hours = dateString.substring(16, 18);
-  var postfix;
-  if (Number(hours) > 12) {
-    postfix = 'PM';
-    hours = hours - 12;
-  } else {
-    postfix = 'AM';
-  }
-  var minutes = dateString.substring(19, 21);
-  return hours + ':' + minutes + ' ' + postfix;
-};
-
 var sendText = function(userPhoneNumber, event, timeoutTime, message) {
-  var eventTime = displayTime(event.eventTime);
 
   //send twilio text
   client.sendMessage({
