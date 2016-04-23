@@ -67,14 +67,15 @@ class Directions extends Component {
       />
         {
           <View style={styles.directions}>
-            
-            <View style={styles.EventRow}>
+            {
+            /*<View style={styles.EventRow}>
             <Text style={styles.EventTitle}>Current Location: </Text>
             <View style={styles.EventInput}>
               <Text style={styles.EventText}>{this.props.directions.leg.startAddress}</Text>
             </View>
           </View>
-
+          */
+          }
             <View style={styles.EventRow}>
               <Text style={styles.EventTitle}>Total Time:  </Text>
               <View style={styles.EventInput}>
@@ -93,7 +94,7 @@ class Directions extends Component {
               <Text style={styles.EventTitle}>Directions: </Text>
               </View>
             {this.props.directions.steps.map((step, index) => 
-              <View style={styles.EventInput}>
+              <View style={styles.EventInput} key={index} >
                 <Text style={styles.EventText}> {step.instructions} </Text>
               </View>
             )}

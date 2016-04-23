@@ -111,7 +111,9 @@ getEventDirections(event) {
         <View style={styles.EventRow}>
           <Text style={styles.EventTitle}>Where: </Text>
           <View style={styles.EventInput}>
-            <Text style={styles.EventText}>{this.props.event.address} {this.props.event.city} {this.props.event.state}</Text>
+            <Text style={styles.EventText}>{this.props.event.address}</Text>
+            <Text style={styles.EventText}>{this.props.event.city} {this.props.event.state}</Text>
+
           </View>
         </View>
         <View style={styles.EventRow}>
