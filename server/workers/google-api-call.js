@@ -21,6 +21,20 @@ var alreadySentTwilio = function(event) {
     });
 };
 
+var displayTime = function(time) {
+  var dateString = time.toString();
+  var hours = dateString.substring(16, 18);
+  var postfix;
+  if (Number(hours) > 12) {
+    postfix = 'PM';
+    hours = hours - 12;
+  } else {
+    postfix = 'AM';
+  }
+  var minutes = dateString.substring(19, 21);
+  return hours + ':' + minutes + ' ' + postfix;
+};
+
 var googleWorker = function(event, origin, phoneNumber) {
   // TODO: parse eventtime and earlyarrival to manipulate milliseconds // validate user form entry
   // var arrivalTime = event.eventTime (convert to UTC sec) - event.earlyArrival (convert to UTC sec);
@@ -48,6 +62,7 @@ var googleWorker = function(event, origin, phoneNumber) {
       var duration = parsedBody.routes[0].legs[0].duration.value;
       var timeoutDuration = (arrivalTime - duration) - currentTime;
       var textMessage = '';
+      var eventTime = displayTime(event.eventTime);
 
       if (timeoutDuration < 0) {
         var late =  Math.ceil((timeoutDuration * -1) / 60);
