@@ -238,9 +238,6 @@ class CreateEvent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image
-          style={styles.bg}
-          source={require('../background.png')}/>
         <View style={styles.inputsContainer}>
           <View style={styles.inputContainer}>
             <TextInput
@@ -366,13 +363,6 @@ class CreateEvent extends Component {
 };
 
 const styles = StyleSheet.create({
-  bg: {
-    top: 0,
-    left: 0,
-    width: deviceWidth,
-    position: 'absolute',
-    height: deviceHeight,
-  },
   container: {
     flex: 1,
     flexDirection: 'column',
