@@ -5,6 +5,7 @@ The goal of hurry-up is to make sure you are never late to an appointment again.
 ## Installation
 
 1. Install all dependencies (there are many!) - run `npm install`
+2. Run rnpm link
 2. To run the server - from the root directory do `nodemon server/server.js`
 
 #### Client-side specifics
