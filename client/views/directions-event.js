@@ -91,11 +91,12 @@ class Directions extends Component {
 
             <View style={styles.EventRow}>
               <Text style={styles.EventTitle}>Directions: </Text>
-                <View style={styles.EventInput}>
-                <Text style={styles.EventText}> {this.props.directions.steps[0].instructions}</Text>
               </View>
-
-            </View>
+            {this.props.directions.steps.map((step, index) => 
+              <View style={styles.EventInput}>
+                <Text style={styles.EventText}> {step.instructions} </Text>
+              </View>
+            )}
 
           </View>
         }
