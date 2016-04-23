@@ -1,9 +1,6 @@
 /* Use  path 104.236.147.132 instead of localhost in production mode*/
 
 export const sendEvent = (newEvent, cb) => {
-
-  console.log('newEvent: ' + newEvent);
-
   fetch('http://localhost:8080/api/events' , {
     method: 'POST',
     headers: {
@@ -124,9 +121,8 @@ console.log('STATED>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', context.state.userId);
     return response.json();
   })
   .then((actualResponse) => {
-    console.log('All Events GET response: ', actualResponse);
-    console.log('context ', context);
     context.setState( { events: actualResponse } );
+    console.log('All Events GET response: ', actualResponse);
   })
   .catch((error) => console.warn('Unable to get user events', error));
 };
@@ -154,7 +150,7 @@ export const getDirections = (event, position, context) => {
     console.log('inside success actualResponse api/directions');
     //if (actualResponse.success) {
     console.log('resp of directions ', actualResponse);
-    context.setState( {directions: actualResponse} );
+    context.setState( {directions: actualResponse, toggleDirections: true });
     //}
   })
   .catch((error) => console.warn('Error creating user', error));

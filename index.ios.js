@@ -25,7 +25,7 @@ class hurryup extends Component {
     this.state = {
       loggedIn: false,
       userId: null,
-      events: []
+      events: [],
     };
   }
   
@@ -38,7 +38,6 @@ class hurryup extends Component {
   }
   
   getEvents() {
-    console.log('inside getEvents in index.ios.js');
     var that = this;
     getAllEvents(that);
   }
@@ -53,7 +52,7 @@ class hurryup extends Component {
           hurryup
         </Text>
         {this.state.loggedIn
-          ? (<Main loggedIn={this.state.loggedIn} userId={this.state.userId} events={this.state.events} getEvents={this.getEvents.bind(this)} />)
+          ? (<Main loggedIn={this.state.loggedIn} userId={this.state.userId} events={this.state.events} getevents={this.getEvents.bind(this)} />)
           : (<Login loggedIn={this.state.loggedIn} handlePress ={this.handleSignIn.bind(this)} tabLabel=''/>)
         }
       </View>

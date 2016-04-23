@@ -44,7 +44,7 @@ exports.addEvent = function(req, res) {
         });
     })
     .catch(function(err) {
-      console.error('Could not fetch user: ' + userId + ', error:  ' + err);
+      console.error('Could not create new event: ', err);
       res.status(500).send(err);
     });
 };

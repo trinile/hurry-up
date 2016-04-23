@@ -97,8 +97,6 @@ class CreateEvent extends Component {
   constructor(props) {
     super(props);
 
-    console.log('CreateEvent props: ', props);
-
     this.watchID = null;
 
     this.state = {
@@ -181,6 +179,8 @@ class CreateEvent extends Component {
       //This method returns a watch ID value then can be used to unregister 
       //the handler by passing it to the Geolocation.clearWatch() method.
       this.watchID = navigator.geolocation.watchPosition((position) => {
+        console.log('im a called?');
+        debugger;
         var lastPosition = position;
         this.setState({ lastPosition });
         var initialPosition   = this.state.initialPosition;
@@ -190,6 +190,7 @@ class CreateEvent extends Component {
         var initialLongitude  = initialPosition.coords.longitude;
 
         var distanceTraveled  = Math.sqrt(Math.pow((initialLatitude - lastLatitude), 2) + Math.pow((initialLongitude - lastLongitude), 2));
+
 
         if (distanceTraveled >= DISTANCE_TO_REFRESH) {
           updateLocation(this.state.lastPosition.coords, that);

@@ -41,28 +41,28 @@ class Directions extends Component {
   render() {
     
     return (
-      <View style={styles.DirectionsContainer} >
+      <View>
         {
-          <View style={styles.directions}>
-            <Text>Starting Address: {this.props.directions.leg.startAddress}</Text> 
-            <Text>Ending Address: {this.props.directions.leg.endAddress}</Text> 
-            <Text>Total Time: {this.props.directions.leg.durationText}</Text> 
-            <Text>Total Distance: {this.props.directions.leg.distanceText}</Text> 
-          </View>
-        }
+            
+          this.props.display ? 
+            <View>
+              <Text>Starting Address: {this.props.directions.leg.startAddress}</Text> 
+              <Text>Ending Address: {this.props.directions.leg.endAddress}</Text> 
+              <Text>Total Time: {this.props.directions.leg.durationText}</Text> 
+              <Text>Total Distance: {this.props.directions.leg.distanceText}</Text> 
+            </View>
+
+          : 
+            <View>
+              <Text>Starting Address:</Text> 
+              <Text>Ending Address:</Text> 
+              <Text>Total Time:</Text> 
+              <Text>Total Distance:</Text> 
+            </View>
+      }
       </View>
     );
   }
 };
-
-const styles = StyleSheet.create({
-  DirectionsContainer: {
-    flex: 1,
-    
-  },
-  directions: {
-    padding: 10
-  }
-});
 
 export default Directions;

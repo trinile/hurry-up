@@ -9,7 +9,9 @@ import React, {
   Image
 } from 'react-native';
 
+// import {getAllEvents} from '../helpers/request-helpers';
 import {getDirections} from '../helpers/request-helpers';
+import {getAllEvents} from '../helpers/request-helpers';
 import Directions from './directions-event';
 import Event from './event-row';
 var Icon = require('react-native-vector-icons/Ionicons');
@@ -23,31 +25,22 @@ class AllEvents extends Component {
 
   constructor(props) {
     super(props);
-
-    console.log('All Events props: ', props); 
-
-
     this.state = {
       userId: this.props.userId
     }
   }
 
-  // componentDidMount() {
-  //   var that = this;
-  //   getAllEvents(that);
-  // }
-
-  componentWillReceiveProps(nextProps) {
-
-     console.log('nextProps ', nextProps);
+  componentDidMount() {
+    var that = this;
+    getAllEvents(that);
   }
-
 
   buttonClicked() {
     //look into using websockets instead of refresh button / or state control
 
-    this.props.getEvents();
-    
+    var that = this;
+    getAllEvents(that);
+    this.render();
   }
 
   getDirections(event) {
@@ -81,18 +74,16 @@ class AllEvents extends Component {
   }
 
   render() {
-
-    { console.log('inside all-event render, props = ', this.props)}
     return (
       <View style={{flex: 1}}>
        <Image
           style={styles.bg}
           source={require('../background.png')}/>
         <ScrollView>
-          {this.props.events.map((event, index) => 
-            <Event key = {index} event={event}/>
-          )}
-          <Text style={styles.welcome}>No more events</Text>
+        {this.props.events.map((event, index) => 
+          <Event key = {index} event={event}/>
+        )}
+          <Text style={styles.welcome}>no more events</Text>
         </ScrollView>
         <TouchableHighlight
           style={styles.button}

@@ -7,8 +7,6 @@ import Profile from '../views/Profile';
 import Signout from '../views/Signout';
 
 module.exports = function (scene) {
-  console.log('scene ', scene);
-  console.log('scene p ', scene.params);
   var componentMap = {
     'Create Event': {
       title: 'Create Event',
