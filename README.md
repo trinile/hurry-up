@@ -14,6 +14,7 @@ This is a fork of the [original project] (https://github.com/LuxuriousNeckbeards
 6. Fixed errors with 12:00 pm events.
 7. Events display on app load, rather than waiting for user to refresh.
 8. User is directed to My Events page after creating or editing an event.
+9. The Create Event page will clear itself if you navigate away from the page while editing an event.
 
 ## NPM Modules We Added
 * [polyline] (https://github.com/mapbox/polyline)
