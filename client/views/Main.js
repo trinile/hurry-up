@@ -26,15 +26,13 @@ class Main extends Component {
 
   constructor(props) {
     super(props);
-    console.log('main props: ', props);
-
   }
   
   _navigate(route) {
     this._navigator.push(navHelper(route));
     this._drawer.close();
   }
- 
+
   render() {
     return (
       <Drawer
@@ -63,7 +61,7 @@ class Main extends Component {
                 loggedIn: this.props.loggedIn,
                 userId: this.props.userId,
                 events: this.props.events,
-                getEvents: this.props.getEvents,
+                getevents: this.props.getevents,
               },
               onLeftButtonPress: () => { this._drawer.open() }
           }}/>
