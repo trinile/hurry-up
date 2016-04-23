@@ -14,6 +14,8 @@ import Directions from './directions-event';
 import Event from './event-row';
 var Icon = require('react-native-vector-icons/Ionicons');
 
+var Icon = require('react-native-vector-icons/Ionicons');
+
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
 
@@ -24,15 +26,22 @@ class AllEvents extends Component {
 
     console.log('All Events props: ', props); 
 
+
     this.state = {
-      userId: this.props.userId,
-      events: this.state.events
+      userId: this.props.userId
     }
   }
 
+  // componentDidMount() {
+  //   var that = this;
+  //   getAllEvents(that);
+  // }
+
   componentWillReceiveProps(nextProps) {
-    console.log('all-events componentWillReceiveProps: ', nextProps);
+
+     console.log('nextProps ', nextProps);
   }
+
 
   buttonClicked() {
     //look into using websockets instead of refresh button / or state control
@@ -72,10 +81,7 @@ class AllEvents extends Component {
   }
 
   render() {
-    var events = this.props.events;
-    if (this.props.route.params.events) {
-      events = this.props.route.params.events;
-    }
+
     { console.log('inside all-event render, props = ', this.props)}
     return (
       <View style={{flex: 1}}>
@@ -83,7 +89,7 @@ class AllEvents extends Component {
           style={styles.bg}
           source={require('../background.png')}/>
         <ScrollView>
-          {events.map((event, index) => 
+          {this.props.events.map((event, index) => 
             <Event key = {index} event={event}/>
           )}
           <Text style={styles.welcome}>No more events</Text>
