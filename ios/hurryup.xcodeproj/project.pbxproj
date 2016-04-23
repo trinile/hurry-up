@@ -443,7 +443,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = BE25GP6BHD;
+						DevelopmentTeam = 7MRC6Y2KF6;
 					};
 				};
 			};
@@ -746,6 +746,7 @@
 				INFOPLIST_FILE = hurryup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.hurryup;
 				PRODUCT_NAME = hurryup;
 				PROVISIONING_PROFILE = "";
 			};
@@ -766,6 +767,7 @@
 				INFOPLIST_FILE = hurryup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.hurryup;
 				PRODUCT_NAME = hurryup;
 				PROVISIONING_PROFILE = "";
 			};
