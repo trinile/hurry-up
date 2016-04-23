@@ -56,10 +56,10 @@ class hurryup extends Component {
   }
 
   resetPageTest(page) {
-    console.log('in on scroll: ', page);
+    // console.log('in on scroll: ', page);
     if (page ===1 && this.state.eventId) {
       this.editEvent(null);
-      console.log('reset the eventId');
+      // console.log('reset the eventId');
       this.setState({
         resetForm: true
       });
