@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
   },
   EventInput: {
     flex: 1,
-    alignItems: 'flex-end',
   },
   EventText: {
     flex: 1,
