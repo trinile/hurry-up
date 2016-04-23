@@ -253,7 +253,7 @@ exports.getEventDirections = function(req, response) {
     } else {
       var steps = parsedBody.routes[0].legs[0].steps;
 
-      var arrSteps = steps.map(function(step) {
+      var arrSteps = steps.map(function(step, index) {
         var regex = /(<([^>]+)>)/ig;
         var body = step.html_instructions;
         var result = body.replace(regex, '');
@@ -263,6 +263,11 @@ exports.getEventDirections = function(req, response) {
           duration: step.duration.text
         };
       });
+      //fix the last step where "Desination is on your Left" is pushed onto last step
+      //split the last step into two steps
+      var lastStep = arrSteps[arrSteps.length - 1].instructions.split('Destination');
+      arrSteps[arrSteps.length - 1].instructions = lastStep[0];
+      arrSteps.push({instructions: 'Destination ' + lastStep[1], duration: 'End'});
 
       var overviewPolyLine = parsedBody.routes[0].overview_polyline.points;
       overviewPolyLine = polyline.decode(overviewPolyLine);
@@ -281,24 +286,6 @@ exports.getEventDirections = function(req, response) {
         }
       };
 
-    var steps = parsedBody.routes[0].legs[0].steps;
-
-    var arrSteps = steps.map(function(step, index) {
-      var regex = /(<([^>]+)>)/ig;
-      var body = step.html_instructions;
-      var result = body.replace(regex, '');
-      console.log('steps regex ', result);
-      return {
-        instructions: result,
-        duration: step.duration.text
-      };
-    });
-    //fix the last step where "Desination is on your Left" is pushed onto last step
-    //split the last step into two steps
-    var lastStep = arrSteps[arrSteps.length - 1].instructions.split('Destination');
-    arrSteps[arrSteps.length - 1].instructions = lastStep[0];
-    arrSteps.push({instructions: 'Destination ' + lastStep[1], duration: 'End'});
-
       var latCenter = (bounds.northeast.lat + bounds.southwest.lat) / 2;
       var lngCenter = (bounds.northeast.lng + bounds.southwest.lng) / 2;
       console.log(bounds);
@@ -306,7 +293,7 @@ exports.getEventDirections = function(req, response) {
       var region = {
         latitude: latCenter,
         longitude: lngCenter,
-        latitudeDelta: Math.abs(latCenter - bounds.northeast.lat) * 3.5 ,
+        latitudeDelta: Math.abs(latCenter - bounds.northeast.lat) * 3.5,
         longitudeDelta: Math.abs(lngCenter - bounds.northeast.lng) * 3.5
       };
 

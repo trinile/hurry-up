@@ -52,7 +52,6 @@ class Event extends Component {
       } 
     };
   }
-<<<<<<< HEAD
  
   _renderHeader(section) {
 
@@ -76,7 +75,7 @@ class Event extends Component {
         <Directions event={this.props.event} />
       </View>
     );
-=======
+  }
   
 getEventDirections(event) {
     var that = this;
@@ -89,7 +88,6 @@ getEventDirections(event) {
     (error) => console.log(error.message),
     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000});   
     
->>>>>>> merging conflicts in event-row and router-helpers
   }
 
   removeEvent(event) {
