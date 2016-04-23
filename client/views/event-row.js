@@ -1,4 +1,5 @@
 import React, {
+  Alert,
   Text,
   View,
   Component,
@@ -100,6 +101,11 @@ class Event extends Component {
     return hours + ':' + minutes + ' ' + postfix;
   }
 
+  confirmDelete() {
+    console.log('confirmDelete called');
+    this.removeEvent.bind(this, this.props.event)();
+  }
+
   render() {
 
     return (
@@ -107,7 +113,17 @@ class Event extends Component {
         <View style={styles.EventRow}>
           <Text style={styles.EventButton}><Icon name="edit" style={styles.buttonStyle} onPress={this.editEvent.bind(this, this.props.event)}></Icon></Text>
           <View style={styles.EventInput}>
-            <Text style={styles.EventText}><Icon name="android-cancel" style={styles.deleteButton} onPress={this.removeEvent.bind(this, this.props.event)}></Icon> </Text>
+            <Text style={styles.EventText}><Icon name="android-cancel" style={styles.deleteButton} 
+
+                         onPress={() => Alert.alert(
+              'Delete Event',
+              null,
+              [
+                {text: 'Cancel', onPress: () => console.log('Canceled!')},
+                {text: 'OK', onPress: () => this.confirmDelete()},
+              ]
+            )}></Icon> </Text>
+
           </View>
         </View>
         <View style={styles.EventRow}>
