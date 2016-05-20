@@ -3,7 +3,7 @@
 The goal of **hurryup** is to make sure you are never late to an appointment again. **hurryup** allows users to save an appointment and receive a text message reminder when they should leave, based on wherever their location happens to be at that time.
 
 
-This is a fork of the [original project] (https://github.com/LuxuriousNeckbeards/hurryup) by **Luxurious Neckbeards**.
+This is a fork of the [original project] (https://github.com/LuxuriousNeckbeards/hurry-up) by **Luxurious Neckbeards**.
 
 ## Features We Added
 1. Ability to edit/delete events
